@@ -1,0 +1,115 @@
+/*-----------------------------------------------
+            always desktop definitions, 
+              then  mobile definition
+ -----------------------------------------------*/
+
+/*------------------- Fonts ------------------ */
+body * {
+    text-align: center;
+}
+.title {
+    font-size: 72px !important;
+    color:white;
+}
+.subTitle {
+    font-size: 25px !important;
+    color: white
+}
+.text {
+    font-size: 24px;
+}
+.or {
+    font-size: 28px !important;
+    font-weight: 700;
+}
+
+.blackFont {
+    color: black !important;
+}
+
+.whiteFont {
+    color: white !important;
+}
+
+@media screen and (max-width: 992px) {
+    .title {
+        font-size: 48px !important;
+        color:white;
+    }
+    .subTitle {
+        font-size: 24px !important;
+        color: white
+    }
+    .text {
+        font-size: 22px;
+    }
+    .or {
+        font-size: 24px !important;
+        font-weight: 700;
+    }
+}
+/*------------------- Colors ------------------ */
+
+.babyYellow {
+    background-color: #F2C94C !important;
+}
+.babyBlue {
+    background-color: #56CCF2 !important;
+}
+.lightBabyYellow {
+    background-color: #FBDC8A !important;
+
+}
+.white {
+    background-color: white !important;
+}
+
+.marfim {
+    background-color: #F2F2F2 !important;
+}
+.black {
+    font: rgba(0, 0, 0, 0.70);
+}
+
+/* ------------------  Text Style --------------*/
+.textShadow {            
+    text-shadow: 1px 1px 2px #363636;
+}
+
+
+/*------------------- widgets -----------------*/
+.button {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.smallbutton {
+    width: 20vw;
+}
+
+@media screen and (max-width: 992px) {
+    .smallbutton {
+        width: 30vw;
+    }
+}
+/*-------------------border --------------------*/
+.noBorder{
+    border: 0 !important;
+}
+
+
+/*------------------ sizes ----------------*/
+
+.fullHeight {
+    min-height: 90vh;
+}
+
+.seventyHeight {
+    min-height: 70vh;
+}
+
+.sixtyHeight {
+    min-height: 60vh;
+}
+
+
