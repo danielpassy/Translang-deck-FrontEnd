@@ -17,7 +17,7 @@ export default function corrections(props) {
                         <CorrectionCard
                             word={props.words[i].word}
                             number={props.words.length}
-                            i={i+1} />
+                            i={i + 1} />
                     </div>
                 </div>
             )
@@ -30,13 +30,13 @@ export default function corrections(props) {
                     <CorrectionCard
                         word={props.words[i].word}
                         number={props.words.length}
-                        i={i+1} />
+                        i={i + 1} />
                 </div>
                 <div className='col-12 col-md-6'>
                     <CorrectionCard
                         word={props.words[i + 1].word}
                         number={props.words.length}
-                        i={i+2} />
+                        i={i + 2} />
                 </div>
             </div>
         )
@@ -49,7 +49,7 @@ export default function corrections(props) {
 
 
     return (
-        <div className='fullHeight babyYellow p-3'
+        <div className='fullHeight babyYellow p-3 hideLeft Corrections'
         // style={{ display: 'none' }} 
         >
             <div className="container lightBabyYellow seventyHeight">

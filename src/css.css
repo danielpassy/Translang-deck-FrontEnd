@@ -113,3 +113,48 @@ body * {
 }
 
 
+/* ----------------  animation ------------------------ */
+
+body {
+    overflow-x: hidden; /* Hide vertical scrollbar */
+}
+
+
+@keyframes slideIn {
+    from {
+        left: -100vw
+    }
+    to {
+        left: 0vw
+    }
+}
+
+@keyframes slideOut {
+    from {
+        left: 0vw
+    }
+    to {
+        left: 100vw
+    }
+}
+
+
+.hideLeft{
+    left: -100vw;
+    position: absolute;
+    width: 100vw;
+}
+
+.slideIn {
+    position: absolute;
+    width: 100vw;
+    -webkit-animation: slideIn 3.0s forwards; /* for less modern browsers */
+    animation: slideIn 3.0s forwards;
+}
+
+.slideOut{
+    position: relative;
+    left: 100vw;
+    -webkit-animation: slideOut 3.0s forwards; /* for less modern browsers */
+    animation: slideOut 3.0s forwards;
+}

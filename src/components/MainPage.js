@@ -18,25 +18,52 @@ export default class MainPage extends Component {
         super()
         this.state = {
             words: [
-                { word: 'hello', message:'has multiple meanings' },
-                { word: 'שדגלן', message:'was not found' },
-                { word: 'שדגשדג', message:'has multiple meanings' },
-                { word: 'שדג', message:'was not found' },
+                { word: 'hello', message: 'has multiple meanings' },
+                { word: 'שדגלן', message: 'was not found' },
+                { word: 'שדגשדג', message: 'has multiple meanings' },
+                { word: 'שדג', message: 'was not found' },
             ]
         }
+        this.submit = this.submit.bind(this)
 
     }
 
-    submitFile(file) {
-        axios.post('/api/upload_file/', {
-            'file': file
-        })
-        .then((response) => {
-            
-        }) 
-        .catch((error) => {
+    async submit(file, method) {
+        const formData = new FormData();
+        formData.append('file', file)
+        try {
+            const response = await axios.post(`/api/upload_${method}/`, formData, {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            })
+            if (response['status'] == 201) {
+                //TODO: redirect to file download page
+            }
+            this.setState((oldState) => {
 
-        })
+                //TODO: fix this
+                oldState['words'] = []
+                for (const error in response['data']['errors']){
+                    oldState['word'].push({ word: error['word'], message: error['message'] })
+                }
+                return oldState
+            })
+            
+
+
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+            // TODO: do something with the Error
+        }
+
+        // change screen
+        const CreatorView = document.querySelector('.Creator')
+        const CorrectionsView = document.querySelector('.Corrections')
+        CreatorView.classList.add("slideOut");
+        CorrectionsView.classList.add("slideIn");
+
     }
     submitCorrection() { }
 
@@ -50,9 +77,9 @@ export default class MainPage extends Component {
         return (
             <div className='App'>
                 <NavBar />
-                <Corrections submitCorrection={this.submitCorrection} words={this.state.words} />
                 <Hero id='Hero' />
-                <Creator id='Creator' submitFile={this.submitFile} />
+                <Corrections submitCorrection={this.submitCorrection} words={this.state.words} />
+                <Creator id='Creator' submit={this.submit} />
                 <Description id='Description' />
                 <Cards id='Cards' />
                 <div id='Action' style={styleStartWithAnki} className='fullHeight babyBlue text-center'>

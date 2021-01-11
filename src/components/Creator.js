@@ -5,9 +5,12 @@ export default class Creator extends Component {
     constructor() {
         super()
         this.state = {
-            dragging: false
+            dragging: false,
+            file: [],
+            word_list: ""
         }
         this.selectFile = this.selectFile.bind(this)
+        this.handleTextInput = this.handleTextInput.bind(this)
         this.submitInput = this.submitInput.bind(this)
     }
 
@@ -72,19 +75,48 @@ export default class Creator extends Component {
     }
 
     inputFile(e) {
+
+        // check for wrong file extension
+        const lastDot = e['name'].lastIndexOf('.');
+        const ext = e['name'].substring(lastDot + 1);
+        if (ext !== 'csv' && ext !== 'xls' && ext !== 'xlsx') {
+            this.dragCounter--
+            if (this.dragCounter > 0) return
+            return this.setState({ dragging: false })
+        }
+
+
         document.querySelector('.inputBox').setAttribute('style', 'display: none !important')
         document.querySelector('.inputtedBox').style.display = 'flex'
         document.querySelector('.inputtedBox').className = document.querySelector('.inputtedBox').className + ' flex-column border border-primary'
         document.querySelector('.fileName').innerHTML = e['name']
+        this.setState((oldState) => {
+            oldState.file = e
+        })
         this.dragCounter = 0
     }
 
-
-
-
-    submitInput(){
-        document.querySelector('.')
+    handleTextInput(e) {
+        const { name, value } = e.target
+        this.setState(oldState => {
+            oldState[name] = value
+            return oldState
+        })
     }
+
+
+    submitInput(e) {
+        e.preventDefault()
+        e.stopPropagation()
+        if (this.state['file'].length == 0 && !this.state["word_list"]) {
+            return alert('Enter a file or write words')
+        }
+        if (this.state['file'].length != 0 && this.state['word_list']) {
+            return alert('Choose either file or write the words, not both')
+        }
+        this.state['file'].lenght != 0 ? this.props.submit(this.state['file'], 'file') : this.props.submit(this.state['word_list'], 'list')
+    }
+
     render() {
 
         const dashBorder = {
@@ -92,8 +124,7 @@ export default class Creator extends Component {
         }
 
         return (
-            <div id={this.props.id} className='fullHeight babyYellow    '>
-
+            <div id={this.props.id} className='fullHeight babyYellow Creator' >
                 <div className="createBox ">
                     <div className="container">
                         <div className="title blackFont row d-flex justify-content-center whiteFont textShadow">
@@ -119,7 +150,7 @@ export default class Creator extends Component {
                             {/* End of inputtedBox */}
 
                             <div className="input inputBox col-5 flex-column textInput d-flex justify-content-center white" style={dashBorder}>
-                                
+
                                 {/* box overlay that accepts drag'n'drop */}
                                 <div className='inputBox' ref={this.dropRef} style={{ display: 'inline-block', position: 'relative' }}>
                                     {this.state.dragging &&
@@ -162,7 +193,7 @@ export default class Creator extends Component {
 
                                     </div>
                                     <label class="btn-primary babyBlue btn noBorder mb-2">
-                                        Select a .csv<input className="chooseFile" type='file' onChange={this.selectFile}accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" hidden />
+                                        Select a .csv<input className="chooseFile" type='file' onChange={this.selectFile} accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" hidden />
                                     </label>
                                 </div>
                             </div>
@@ -173,7 +204,13 @@ export default class Creator extends Component {
                                 <div className="form-group"><div className="subTitle text-center">
                                     Enter the words
                                 </div>
-                                    <textarea placeholder={'שלום \n שחרתי\n קרתי'} className="form-control text-right" rows='4'>
+                                    <textarea
+                                        placeholder={'שלום \n שחרתי\n קרתי'}
+                                        className="form-control text-right"
+                                        name='word_list'
+                                        rows='4'
+                                        onChange={this.handleTextInput}
+                                        value={this.state.word_list}>
 
                                     </textarea>
                                 </div>
