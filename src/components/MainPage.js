@@ -8,6 +8,7 @@ import Creator from './Creator'
 import Hero from './Hero'
 import Corrections from './Corrections'
 import Description from './Description'
+import Download from './Download'
 import "./../App.css";
 import "./../css.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -78,6 +79,7 @@ export default class MainPage extends Component {
             <div className='App'>
                 <NavBar />
                 <Hero id='Hero' />
+                <Download />
                 <Corrections submitCorrection={this.submitCorrection} words={this.state.words} />
                 <Creator id='Creator' submit={this.submit} />
                 <Description id='Description' />
