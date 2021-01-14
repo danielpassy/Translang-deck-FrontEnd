@@ -81,6 +81,7 @@ body * {
 .button {
     color: white;
     box-shadow: inset -1px -1px 5px 2px rgba(0, 0, 0, 0.15);
+    border-radius: 5% !important;
 }
 
 .smallbutton {
@@ -99,7 +100,7 @@ body * {
 
 
 .grayBorder {
-    border-color: rgba(0, 0, 0, 0.1 );
+    border-color: rgba(0, 0, 0, 0.2 ) !important;
 }
 
 
@@ -129,45 +130,102 @@ body * {
 /* ----------------  animation ------------------------ */
 
 body {
-    overflow-x: hidden; /* Hide vertical scrollbar */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
 }
 
-
-@keyframes slideIn {
-    from {
-        left: -100vw
+/* Left to Right */
+@keyframes slideInLR {
+    0% {
+        left: -100vw;
+        position: absolute
     }
-    to {
+    100% {
+        left: -1vw;
+    }
+}
+
+@keyframes slideOutLR {
+    0% {
         left: 0vw
     }
-}
-
-@keyframes slideOut {
-    from {
-        left: 0vw
-    }
-    to {
-        left: 100vw
+    100% {
+        left: 100vw;
     }
 }
 
 
-.hideLeft{
+/* Right to Left */
+
+@keyframes slideInRL {
+    0% {
+        right: -100vw;
+        position: absolute;
+    }
+    100% {
+        right: -1vw;
+    }
+}
+
+@keyframes slideOutRL{
+    0% {
+        right: 0vw;
+        position: absolute;
+    }
+    100% {
+        right: 100vw;
+    }
+}
+
+
+
+.unhide {
+    position: unset;
+}
+
+.hideLeft {
     left: -100vw;
     position: absolute;
     width: 100vw;
 }
 
-.slideIn {
-    position: absolute;
+.positionHelper {
+    position: absolute !important;
     width: 100vw;
-    -webkit-animation: slideIn 3.0s forwards; /* for less modern browsers */
-    animation: slideIn 3.0s forwards;
 }
 
-.slideOut{
+.hideRight {
+    right: -100vw;
+    position: absolute;
+    width: 100vw;
+}
+
+/*  THE ANIMATION TIME IS HARDCODED HERE AND IN THE MAINPAGE SETTIMEOUT
+    FUNCTION! DON'T CHANGE ONE WITHOUT CHANGING THE OTHER                */
+.slideInLR {
+    width: 100vw;
+    -webkit-animation: slideInLR 3.0s forwards; /* for less modern browsers */
+    animation: slideInLR 3.0s forwards;
+    animation-fill-mode: forwards;  
+}
+
+.slideOutLR {
     position: relative;
     left: 100vw;
-    -webkit-animation: slideOut 3.0s forwards; /* for less modern browsers */
-    animation: slideOut 3.0s forwards;
+    -webkit-animation: slideOutLR 3.0s forwards; /* for less modern browsers */
+    animation: slideOutLR 3.0s forwards;
+    animation-fill-mode: forwards;  
+}
+
+.slideInRL {
+    width: 100vw;
+    -webkit-animation: slideInRL 3.0s forwards; /* for less modern browsers */
+    animation: slideInRL 3.0s forwards;
+    animation-fill-mode: forwards;  
+}
+
+.slideOutRL {
+    position: relative;
+    -webkit-animation: slideOutRL 3.0s forwards; /* for less modern browsers */
+    animation: slideOutRL 3.0s forwards;
+    animation-fill-mode: forwards;  
 }

@@ -1,9 +1,6 @@
 import React from 'react'
 
 export default function Download() {
-    const relative = {
-        position: 'relative'
-    }
 
     const absolute45 = {
         position: 'absolute',
@@ -25,7 +22,7 @@ export default function Download() {
     }
 
     return (
-        <div className='fullHeight' style={relative}>
+        <div className='fullHeight hideLeft'>
             {/* the background beeing two colors */}
             <div className='fourtyFiveHeight babyBlue p-3 ' style={absolute45}></div>
             <div className='fourtyFiveHeight babyYellow' style={absolute0}></div>
@@ -42,7 +39,7 @@ export default function Download() {
                                 <img style={imageModifier} className=' fourtyFiveHeight' src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Anki-icon.svg/1200px-Anki-icon.svg.png" alt="Anki Logo" /></div>
                             <div className="download pt-3">
                                 <label for="downloadBTN">
-                                    <input type="button" value="Download" name="downloadBTN" className="subTitle btn marfim button noBorder" />
+                                    <input type="button" value="Download" name="downloadBTN" className="subTitle btn marfim button grayBorder" />
                                 </label>
                             </div>
                         </div>

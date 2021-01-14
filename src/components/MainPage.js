@@ -18,6 +18,9 @@ export default class MainPage extends Component {
     constructor() {
         super()
         this.state = {
+            creator: true,
+            corrections: false,
+            download: false,
             words: [
                 { word: 'hello', message: 'has multiple meanings' },
                 { word: 'שדגלן', message: 'was not found' },
@@ -26,6 +29,7 @@ export default class MainPage extends Component {
             ]
         }
         this.submit = this.submit.bind(this)
+        this.cancel = this.cancelCorrection.bind(this)
 
     }
 
@@ -45,12 +49,12 @@ export default class MainPage extends Component {
 
                 //TODO: fix this
                 oldState['words'] = []
-                for (const error in response['data']['errors']){
+                for (const error in response['data']['errors']) {
                     oldState['word'].push({ word: error['word'], message: error['message'] })
                 }
                 return oldState
             })
-            
+
 
 
             console.log(response)
@@ -62,10 +66,41 @@ export default class MainPage extends Component {
         // change screen
         const CreatorView = document.querySelector('.Creator')
         const CorrectionsView = document.querySelector('.Corrections')
-        CreatorView.classList.add("slideOut");
-        CorrectionsView.classList.add("slideIn");
+        CreatorView.classList.add("slideOutLR");
+        CorrectionsView.classList.add("slideInLR");
+        setTimeout(() => {
+            CreatorView.classList.add("hideRight")
+            CorrectionsView.classList.add("unhide")
+
+            CreatorView.classList.remove("slideOutLR")
+            CorrectionsView.classList.remove("slideInLR", "hideLeft")
+        }, 3000);
 
     }
+
+
+    cancelCorrection() {
+        // clean the state 
+        // animate backwards
+        const CreatorView = document.querySelector('.Creator')
+        const CorrectionsView = document.querySelector('.Corrections')
+        CorrectionsView.classList.remove("unhide")
+        CreatorView.classList.remove("hideRight");
+        CreatorView.classList.add("slideInRL", "positionHelper");
+        CorrectionsView.classList.add("slideOutRL", "positionHelper");
+        setTimeout(() => {
+            CreatorView.classList.add("unhide")
+            CorrectionsView.classList.add("hideLeft")
+
+            //  positionHelper is a non ideal fix, 
+            // ideally there should be something to keep the position of the site below
+            CreatorView.classList.remove("slideInRL", "positionHelper")
+            CorrectionsView.classList.remove("slideOutRL", "positionHelper")
+        }, 3000);
+
+    }
+
+
     submitCorrection() { }
 
 
@@ -75,12 +110,14 @@ export default class MainPage extends Component {
             fontSize: '64px'
         }
 
+
+
         return (
             <div className='App'>
                 <NavBar />
                 <Hero id='Hero' />
-                <Download />
-                <Corrections submitCorrection={this.submitCorrection} words={this.state.words} />
+                <Download id='Creator' />
+                <Corrections id='Creator' cancel={this.cancelCorrection} submitCorrection={this.submitCorrection} words={this.state.words} />
                 <Creator id='Creator' submit={this.submit} />
                 <Description id='Description' />
                 <Cards id='Cards' />
