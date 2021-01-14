@@ -179,7 +179,7 @@ body {
 
 
 .unhide {
-    position: unset;
+    position: relative;
 }
 
 .hideLeft {
@@ -193,14 +193,21 @@ body {
     width: 100vw;
 }
 
+.zHelper {
+    z-index: 10;
+}
+
+
 .hideRight {
     right: -100vw;
     position: absolute;
     width: 100vw;
 }
 
-/*  THE ANIMATION TIME IS HARDCODED HERE AND IN THE MAINPAGE SETTIMEOUT
+/*  THE ANIMATION TIME IS HARDCODED BELOW AND IN THE MAINPAGE SETTIMEOUT
     FUNCTION! DON'T CHANGE ONE WITHOUT CHANGING THE OTHER                */
+
+
 .slideInLR {
     width: 100vw;
     -webkit-animation: slideInLR 3.0s forwards; /* for less modern browsers */

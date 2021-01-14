@@ -22,12 +22,12 @@ export default function Download() {
     }
 
     return (
-        <div className='fullHeight hideLeft'>
+        <div className='fullHeight hideLeft Download'>
             {/* the background beeing two colors */}
             <div className='fourtyFiveHeight babyBlue p-3 ' style={absolute45}></div>
             <div className='fourtyFiveHeight babyYellow' style={absolute0}></div>
             {/* actual content */}
-            <div className='p-3'>
+            <div className='p-1'>
                 <div className='eightyHeight rounded border grayBorder ml-3 mr-3 '>
                     <div className="d-flex flex-column">
                         <div className="top">

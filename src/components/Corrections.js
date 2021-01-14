@@ -50,10 +50,15 @@ export default function corrections(props) {
 
     return (
         <div id={props.id} className='fullHeight babyYellow p-3 hideLeft Corrections'>
-            <div className="container lightBabyYellow seventyHeight">
+            <div className="container lightBabyYellow seventyHeight" >
                 <p style={{ position: 'absolute', left: '14vw' }}
                     className='greyBorder btn btn-primary'
                     onClick={props.cancel}>
+                    return
+                </p>
+                <p style={{ position: 'absolute', right: '14vw', bottom: '5vh' , zIndex: '10'}}
+                    className='greyBorder btn btn-primary'
+                    onClick={props.submitCorrection}>
                     return
                 </p>
                 <p style={{ position: 'absolute', left: '14vw', height: '20vh' }} className=''>

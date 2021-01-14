@@ -30,6 +30,7 @@ export default class MainPage extends Component {
         }
         this.submit = this.submit.bind(this)
         this.cancel = this.cancelCorrection.bind(this)
+        this.submitCorrection = this.submitCorrection.bind(this)
 
     }
 
@@ -101,7 +102,35 @@ export default class MainPage extends Component {
     }
 
 
-    submitCorrection() { }
+    submitCorrection() {
+        // TODO:fetch resources in the BackEnd
+        
+        // TODO:update state with the file Link
+
+        // Transition to the next page
+        const DownloadView = document.querySelector('.Download')
+        const CorrectionsView = document.querySelector('.Corrections')
+        
+        // TODO: The transition is really messed up.
+        // There are two problems:
+        // The Nav bar breaks in the third transition (no idea why)
+        // When the correction is bigger than the third or the first, 
+        // it shows a white part before collapsin, 
+        // possible solution: add a rectangle behind with the same size.
+        // And scroll up togeter with the animation.
+
+
+        CorrectionsView.classList.add("slideOutLR");
+        DownloadView.classList.add("slideInLR");
+        DownloadView.classList.add("unhide")
+
+        setTimeout(() => {
+            CorrectionsView.classList.add("hideRight")
+
+            CorrectionsView.classList.remove("slideOutLR")
+            DownloadView.classList.remove("slideInLR", "hideLeft")
+        }, 3000);
+     }
 
 
 
@@ -117,7 +146,11 @@ export default class MainPage extends Component {
                 <NavBar />
                 <Hero id='Hero' />
                 <Download id='Creator' />
-                <Corrections id='Creator' cancel={this.cancelCorrection} submitCorrection={this.submitCorrection} words={this.state.words} />
+                <Corrections 
+                    id='Creator' 
+                    cancel={this.cancelCorrection} 
+                    submitCorrection={this.submitCorrection} 
+                    words={this.state.words} />
                 <Creator id='Creator' submit={this.submit} />
                 <Description id='Description' />
                 <Cards id='Cards' />
