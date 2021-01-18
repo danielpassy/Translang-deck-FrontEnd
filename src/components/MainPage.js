@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
 import Footer from './Footer'
 import NavBar from './NavBar'
 import Cards from './Cards'
@@ -34,31 +33,27 @@ export default class MainPage extends Component {
 
     }
 
-    async submit(file, method) {
-        const formData = new FormData();
-        formData.append('file', file)
+    async submit(data, method) {
+    
+        // split into list
+        if (method === 'list') { data = data.split(/\r?\n/) }        
+        let body = (method === 'file') ? { 'file': data } : { 'word_list': data }
+        
         try {
-            const response = await axios.post(`/api/upload_${method}/`, formData, {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            })
+            const response = await axios.post(`/api/upload_${method}/`, body)
             if (response['status'] == 201) {
                 //TODO: redirect to file download page
             }
             this.setState((oldState) => {
 
-                //TODO: fix this
                 oldState['words'] = []
                 for (const error in response['data']['errors']) {
-                    oldState['word'].push({ word: error['word'], message: error['message'] })
+                    console.log(error)
+                    oldState['words'].push({ word: response['data']['errors'][error]['word'], message: response['data']['errors'][error]['message'] })
                 }
                 return oldState
             })
 
-
-
-            console.log(response)
         } catch (error) {
             console.log(error)
             // TODO: do something with the Error
@@ -78,7 +73,6 @@ export default class MainPage extends Component {
         }, 3000);
 
     }
-
 
     cancelCorrection() {
         // clean the state 
@@ -104,13 +98,13 @@ export default class MainPage extends Component {
 
     submitCorrection() {
         // TODO:fetch resources in the BackEnd
-        
+
         // TODO:update state with the file Link
 
         // Transition to the next page
         const DownloadView = document.querySelector('.Download')
         const CorrectionsView = document.querySelector('.Corrections')
-        
+
         // TODO: The transition is really messed up.
         // There are two problems:
         // The Nav bar breaks in the third transition (no idea why)
@@ -130,7 +124,7 @@ export default class MainPage extends Component {
             CorrectionsView.classList.remove("slideOutLR")
             DownloadView.classList.remove("slideInLR", "hideLeft")
         }, 3000);
-     }
+    }
 
 
 
@@ -146,10 +140,10 @@ export default class MainPage extends Component {
                 <NavBar />
                 <Hero id='Hero' />
                 <Download id='Creator' />
-                <Corrections 
-                    id='Creator' 
-                    cancel={this.cancelCorrection} 
-                    submitCorrection={this.submitCorrection} 
+                <Corrections
+                    id='Creator'
+                    cancel={this.cancelCorrection}
+                    submitCorrection={this.submitCorrection}
                     words={this.state.words} />
                 <Creator id='Creator' submit={this.submit} />
                 <Description id='Description' />

@@ -12,7 +12,7 @@ export default function corrections(props) {
         // if there`s an even number of corrections, push just one
         if (i + 2 > props.words.length) {
             cardContainer.push(
-                <div className="row ">
+                <div className="row m-3">
                     <div className='col-12 col-md-6 '>
                         <CorrectionCard
                             word={props.words[i].word}

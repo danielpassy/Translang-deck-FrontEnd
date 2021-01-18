@@ -114,7 +114,8 @@ export default class Creator extends Component {
         if (this.state['file'].length != 0 && this.state['word_list']) {
             return alert('Choose either file or write the words, not both')
         }
-        this.state['file'].lenght != 0 ? this.props.submit(this.state['file'], 'file') : this.props.submit(this.state['word_list'], 'list')
+        console.log(this.state['file'], this.state['file'].length)
+        this.state['file'].length === 0 ? this.props.submit(this.state['word_list'], 'list') : this.props.submit(this.state['file'], 'file')
     }
 
     render() {
@@ -124,7 +125,7 @@ export default class Creator extends Component {
         }
 
         return (
-            <div id={this.props.id} className='fullHeight babyYellow Creator' >
+            <div id={this.props.id} className='fullHeight babyYellow Creator TEST' >
                 <div className="createBox ">
                     <div className="container">
                         <div className="title blackFont row d-flex justify-content-center whiteFont textShadow">
