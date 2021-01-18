@@ -8,7 +8,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Animation />
   </React.StrictMode>,
-  document.querySelector('#content')
+  document.querySelector('#root')
   // document.getElementById('root')
 );
 
