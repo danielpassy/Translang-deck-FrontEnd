@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Main from './components/MainPage';
 import * as serviceWorker from './serviceWorker';
+import Animation from './components/Animation/Animation'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Main />
+    <Animation />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.querySelector('#content')
+  // document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
