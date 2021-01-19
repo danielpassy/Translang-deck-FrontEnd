@@ -2,11 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Main from './components/MainPage';
 import * as serviceWorker from './serviceWorker';
-import Animation from './components/Animation/Animation'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Animation />
+    <Main />
   </React.StrictMode>,
   document.querySelector('#root')
   // document.getElementById('root')

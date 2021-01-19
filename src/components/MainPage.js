@@ -8,6 +8,8 @@ import Hero from './Hero'
 import Corrections from './Corrections'
 import Description from './Description'
 import Download from './Download'
+import Animation from './Animation/Animation'
+
 import "./../App.css";
 import "./../css.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -138,6 +140,7 @@ export default class MainPage extends Component {
         return (
             <div className='App'>
                 <NavBar />
+                <Animation />
                 <Hero id='Hero' />
                 <Download id='Creator' />
                 <Corrections
