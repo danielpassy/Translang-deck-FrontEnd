@@ -9,6 +9,7 @@ import Corrections from './Corrections'
 import Description from './Description'
 import Download from './Download'
 import Animation from './Animation/Animation'
+import AnimationDemo from './Animation/AnimationDemo'
 
 import "./../App.css";
 import "./../css.css"
@@ -141,6 +142,7 @@ export default class MainPage extends Component {
             <div className='App'>
                 <NavBar />
                 <Animation />
+                <AnimationDemo />
                 <Hero id='Hero' />
                 <Download id='Creator' />
                 <Corrections
