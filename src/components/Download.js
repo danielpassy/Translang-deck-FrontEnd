@@ -22,7 +22,7 @@ export default function Download() {
     }
 
     return (
-        <div className='fullHeight hideLeft Download'>
+        <div className='fullHeight Download position-relative'>
             {/* the background beeing two colors */}
             <div className='fourtyFiveHeight babyBlue p-3 ' style={absolute45}></div>
             <div className='fourtyFiveHeight babyYellow' style={absolute0}></div>

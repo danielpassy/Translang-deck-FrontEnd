@@ -37,11 +37,11 @@ export default class MainPage extends Component {
     }
 
     async submit(data, method) {
-    
+
         // split into list
-        if (method === 'list') { data = data.split(/\r?\n/) }        
+        if (method === 'list') { data = data.split(/\r?\n/) }
         let body = (method === 'file') ? { 'file': data } : { 'word_list': data }
-        
+
         try {
             const response = await axios.post(`/api/upload_${method}/`, body)
             if (response['status'] == 201) {
@@ -141,7 +141,11 @@ export default class MainPage extends Component {
         return (
             <div className='App'>
                 <NavBar />
-                <Animation />
+                <Animation
+                    cancel={this.cancelCorrection}
+                    submitCorrection={this.submitCorrection}
+                    words={this.state.words}
+                    submit={this.submit} />
                 <AnimationDemo />
                 <Hero id='Hero' />
                 <Download id='Creator' />

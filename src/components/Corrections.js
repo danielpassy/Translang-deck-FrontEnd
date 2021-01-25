@@ -49,7 +49,7 @@ export default function corrections(props) {
 
 
     return (
-        <div id={props.id} className='fullHeight babyYellow p-3 hideLeft Corrections'>
+        <div id={props.id} className='fullHeight babyYellow p-3 Corrections position-relative'>
             <div className="container lightBabyYellow seventyHeight" >
                 <p style={{ position: 'absolute', left: '14vw' }}
                     className='greyBorder btn btn-primary'

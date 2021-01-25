@@ -19,6 +19,7 @@ export default class Animation extends React.Component {
       configs2: undefined,
       views: undefined
     };
+    this.create = this.create.bind(this)
   };
 
 
@@ -34,41 +35,47 @@ export default class Animation extends React.Component {
       document.querySelector(".Download"),
       window.innerWidth
     ]
-    // cool, so probably we're going to have this
-    let viewsDimension = views.map((view) => {
-      return [window.innerWidth, view.offsetHeight]
-    })
-
+    // views
     const Block = [
       CorrectionsView,
       CreatorView,
       DownloadView
     ]
-    const [currWidth, currHeight] = viewsDimension[currDimension]
 
-    const widths = viewsDimension.map(([origW, origH]) => {
-      return currHeight / origH * origW
-    });
 
-    const leftStartCoords = widths
-      .slice(0, currDimension)
-      .reduce((sum, width) => sum - width, 0);
+    // cool, so probably we're going to have this
 
-    let configs2 = [];
-    viewsDimension.reduce((prevLeft, _, i) => {
+    // drawm the left position
+
+    let height = views.slice(0, 3).map((view) => {
+      return view.offsetHeight
+    })
+    let width = views.slice(0, 3).map((view) => {
+      return window.innerWidth
+    })
+    let leftPosition = [0]
+    for (let i = 1; i < 3; i++) {
+      leftPosition[i] = leftPosition[i - 1] + width[i]
+    }
+
+
+
+    let configs2 = []
+    for (let i = 0; i < 3; i++) {
       configs2.push({
         style: {
-          left: spring(prevLeft, springSettings),
-          height: spring(currHeight, springSettings),
-          width: spring(widths[i], springSettings),
+          left: spring(leftPosition[i], springSettings),
+          height: spring(height[i], springSettings),
+          width: spring(width[i], springSettings),
         },
         view: DownloadView
       });
-      return prevLeft + widths[i];
-    }, leftStartCoords);
+    }
+
+
 
     this.setState((oldState) => {
-      oldState['dimensions'] = viewsDimension
+      oldState['dimensions'] = [height, width]
       oldState['configs2'] = configs2
       oldState['currDimension'] = 0
       oldState['views'] = Block
@@ -77,48 +84,48 @@ export default class Animation extends React.Component {
 
   };
 
+  create(data, method){
+    this.props.submit(data, method)
 
+  }
   handleChange = ({ target: { value } }) => {
+
+
     const currDimension = this.state['currDimension']
     const viewsDimension = this.state['dimensions']
 
-    let [currHeight, currWidth] = viewsDimension[currDimension]
+
+    let height = viewsDimension[0]
+    let width = viewsDimension[1]
+    console.log(height, width)
+
+    let leftPosition = []
+    leftPosition[value] = 0
+    console.log(leftPosition)
+    // 
+
+    for (let i = Number(value) + 1; i < 3; i++) {
+      console.log(i)
+      leftPosition[i] = leftPosition[i - 1] + width[i]
+    }
+    for (let i = value - 1; i >= 0; i--) {
+      console.log(i)
+      leftPosition[i] = leftPosition[i + 1] - width[i]
+    }
+    console.log(leftPosition)
 
 
-    // this
-    // const widths = viewsDimension.map(([origW, origH]) => {
-    //   return currHeight / origH * origW
-    // });
-
-    // const leftStartCoords = widths
-    //   .slice(0, currDimension)
-    //   .reduce((sum, width) => sum - width, 0);
-    let accumulator = 0
-    let configs2 = [];
-    // // for (let i = 0; i < 3; i++) {
-    // //   configs2.push({
-    // //     style: {
-    // //       left: spring(accumulator, springSettings),
-    // //       height: spring(currHeight, springSettings),
-    // //       width: spring(this.state['dimensions'][i][0], springSettings),
-    // //     },
-    // //     view: DownloadView
-    // //   });
-    // //   accumulator = accumulator + this.state['dimensions'][i][0]
-
-  
-
-    // viewsDimension.reduce((prevLeft, _, i) => {
-    //   configs2.push({
-    //     style: {
-    //       left: spring(prevLeft, springSettings),
-    //       height: spring(currHeight, springSettings),
-    //       width: spring(widths[i], springSettings),
-    //     },
-    //     view: DownloadView
-    //   });
-    //   return prevLeft + widths[i];
-    // }, leftStartCoords);
+    let configs2 = []
+    for (let i = 0; i < 3; i++) {
+      configs2.push({
+        style: {
+          left: spring(leftPosition[i], springSettings),
+          height: spring(height[i], springSettings),
+          width: spring(width[i], springSettings),
+        },
+        view: DownloadView
+      });
+    }
 
     this.setState((oldState) => {
       oldState['configs2'] = configs2
@@ -138,38 +145,42 @@ export default class Animation extends React.Component {
           <input
             type="range"
             min={0}
-            max={this.state['dimensions'].length - 1}
+            max={this.state['dimensions'].length}
             value={this.state['currDimension']}
             onChange={this.handleChange} />
 
           <div className='d-flex justify-content-center'>
             <Motion style={{
-              height: spring(this.state['dimensions'][this.state['currDimension']][1]),
-              width: spring(this.state['dimensions'][this.state['currDimension']][0]),
-
+              height: spring(this.state['dimensions'][0][this.state['currDimension']]),
+              width: spring(this.state['dimensions'][1][this.state['currDimension']]),
             }}>
               {style =>
                 <div className="demo4" style={style}>
-                  <Motion style={{
-                    height: spring(this.state['dimensions'][this.state['currDimension']][1]),
-                    width: spring(this.state['dimensions'][this.state['currDimension']][0])
-                  }}>
+                  <Motion style={style}>
                     {container =>
                       <div className="demo4-inner" style={container}>
                         <Motion key={0} style={this.state['configs2'][0]['style']}>
                           {style =>
                             <div className='demo4-photo' style={style}>
-                              <CreatorView />
+                              <CreatorView
+                                id='Creator' submit={this.create} />
                             </div>
                           }
                         </Motion>
                         <Motion key={1} style={this.state['configs2'][1]['style']}>
                           {style =>
-                            <div className='demo4-photo' style={{
-                              height: spring(this.state['dimensions'][this.state['currDimension']][1]),
-                              width: spring(this.state['dimensions'][this.state['currDimension']][0]),
-                              left: spring(860)
-                            }}>
+                            <div className='demo4-photo' style={style}>
+                              <CorrectionsView
+                                id='Creator'
+                                cancel={this.props.cancelCorrection}
+                                submitCorrection={this.props.submitCorrection}
+                                words={this.props.words} />
+                            </div>
+                          }
+                        </Motion>
+                        <Motion key={2} style={this.state['configs2'][2]['style']}>
+                          {style =>
+                            <div className='demo4-photo' style={style}>
                               <DownloadView />
                             </div>
                           }
