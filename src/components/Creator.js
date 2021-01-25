@@ -114,7 +114,7 @@ export default class Creator extends Component {
         if (this.state['file'].length != 0 && this.state['word_list']) {
             return alert('Choose either file or write the words, not both')
         }
-        console.log(this.state['file'], this.state['file'].length)
+        
         this.state['file'].length === 0 ? this.props.submit(this.state['word_list'], 'list') : this.props.submit(this.state['file'], 'file')
     }
 

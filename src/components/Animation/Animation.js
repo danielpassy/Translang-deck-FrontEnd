@@ -1,5 +1,7 @@
 import React from 'react';
 import { Motion, spring } from 'react-motion';
+import axios from 'axios'
+
 import './Animation.css'
 import CorrectionsView from '../Corrections'
 import CreatorView from '../Creator'
@@ -17,35 +19,93 @@ export default class Animation extends React.Component {
       dimensions: [[500, 350], [800, 600], [800, 400], [700, 500], [200, 650], [600, 600]],
       currDimension: undefined,
       configs2: undefined,
-      views: undefined
+      views: undefined,
+      words: [
+        { word: 'hello', message: 'has multiple meanings' },
+        { word: 'שדגלן', message: 'was not found' },
+        { word: 'שדגשדג', message: 'has multiple meanings' },
+        { word: 'שדג', message: 'was not found' },
+      ],
+      link: ""
     };
-    this.create = this.create.bind(this)
+    this.submitCorrectionWrapper = this.submitCorrectionWrapper.bind(this)
+    this.submitWrapper = this.submitWrapper.bind(this)
+    this.cancelCorrection = this.cancelCorrection.bind(this)
+    this.submitCorrection = this.submitCorrection.bind(this)
   };
 
+  async submitWrapper(data, method) {
+    // prevent users to see the words changing
+    let response = await this.submit(data, method)
+    response ? this.changeView(response) : console.log("error")
+    //TODO: do something with the error.
+  };
 
-  componentDidMount() {
+  async submit(data, method) {
 
-    // always start with the first, obviously.
-    const currDimension = 0
+    // split input into list
+    if (method === 'list') { data = data.split(/\r?\n/) }
 
-    // hypothesis, this is will be called only once
+    let body = (method === 'file') ? { 'file': data } : { 'word_list': data }
+
+    try {
+      const response = await axios.post(`/api/upload_${method}/`, body)
+      if (response['status'] == 201) {
+        //TODO: redirect to file download page
+        return 2;
+      }
+      else if (response['status'] == 200) {
+        this.setState((oldState) => {
+
+          oldState['words'] = []
+          for (const error in response['data']['errors']) {
+            console.log(error)
+            oldState['words'].push({ word: response['data']['errors'][error]['word'], message: response['data']['errors'][error]['message'] })
+          }
+          return oldState
+        })
+        return 1;
+      }
+      else {
+        throw new Error(`Unexpected response ${response['status']}`);
+      }
+
+    } catch (error) {
+      console.log(error)
+      return 0;
+      // TODO: do something with the Error
+    }
+  };
+
+  async submitCorrectionWrapper() {
+    // prevent users to see the view changing
+    let response = await this.submitCorrection()
+    response ? this.changeView(response) : console.log("error")
+  };
+
+  submitCorrection() {
+    // TODO:fetch resources in the BackEnd
+
+    // TODO:update state with the file Link
+    return 2;
+  };
+  cancelCorrection() {
+    this.changeView(0)
+    // to avoid the user to see the transition
+    setTimeout(() => { this.setState((oldState) => oldState[`words`] = []) }, 500)
+  };
+  changeView = (x) => {
+    // 'object' in case it's triggered by a button,
+    //  false if called by another ufnction
+    let value;
+    value = typeof (x) == 'object' ? x['target']['value'] : x
+
+    //recalculate the view sizes
     const views = [
-      document.querySelector(".Corrections"),
       document.querySelector(".Creator"),
+      document.querySelector(".Corrections"),
       document.querySelector(".Download"),
-      window.innerWidth
     ]
-    // views
-    const Block = [
-      CorrectionsView,
-      CreatorView,
-      DownloadView
-    ]
-
-
-    // cool, so probably we're going to have this
-
-    // drawm the left position
 
     let height = views.slice(0, 3).map((view) => {
       return view.offsetHeight
@@ -53,62 +113,18 @@ export default class Animation extends React.Component {
     let width = views.slice(0, 3).map((view) => {
       return window.innerWidth
     })
-    let leftPosition = [0]
-    for (let i = 1; i < 3; i++) {
-      leftPosition[i] = leftPosition[i - 1] + width[i]
-    }
-
-
-
-    let configs2 = []
-    for (let i = 0; i < 3; i++) {
-      configs2.push({
-        style: {
-          left: spring(leftPosition[i], springSettings),
-          height: spring(height[i], springSettings),
-          width: spring(width[i], springSettings),
-        },
-        view: DownloadView
-      });
-    }
-
-
-
-    this.setState((oldState) => {
-      oldState['dimensions'] = [height, width]
-      oldState['configs2'] = configs2
-      oldState['currDimension'] = 0
-      oldState['views'] = Block
-      return oldState
-    })
-
-  };
-
-  create(data, method){
-    this.props.submit(data, method)
-
-  }
-  handleChange = ({ target: { value } }) => {
-
 
     const currDimension = this.state['currDimension']
-    const viewsDimension = this.state['dimensions']
-
-
-    let height = viewsDimension[0]
-    let width = viewsDimension[1]
-    console.log(height, width)
 
     let leftPosition = []
     leftPosition[value] = 0
-    console.log(leftPosition)
-    // 
-
+    // for values to the left of value, reduce left.
+    // values on the right, increase left.  
     for (let i = Number(value) + 1; i < 3; i++) {
       console.log(i)
       leftPosition[i] = leftPosition[i - 1] + width[i]
     }
-    for (let i = value - 1; i >= 0; i--) {
+    for (let i = Number(value) - 1; i >= 0; i--) {
       console.log(i)
       leftPosition[i] = leftPosition[i + 1] - width[i]
     }
@@ -122,33 +138,68 @@ export default class Animation extends React.Component {
           left: spring(leftPosition[i], springSettings),
           height: spring(height[i], springSettings),
           width: spring(width[i], springSettings),
-        },
-        view: DownloadView
+        }
       });
     }
 
     this.setState((oldState) => {
       oldState['configs2'] = configs2
       oldState['currDimension'] = value
+      oldState['dimensions'] = [height, width]
       return oldState
     })
   };
+  componentDidMount() {
+
+    // always start with the first, obviously.
+    const currDimension = 0
+
+    // hypothesis, this is will be called only once
+    const views = [
+      document.querySelector(".Creator"),
+      document.querySelector(".Corrections"),
+      document.querySelector(".Download"),
+      window.innerWidth
+    ]
+    // views
 
 
+    let height = views.slice(0, 3).map((view) => {
+      return view.offsetHeight
+    })
+    let width = views.slice(0, 3).map((view) => {
+      return window.innerWidth
+    })
+    let leftPosition = [0]
+    for (let i = 1; i < 3; i++) {
+      leftPosition[i] = leftPosition[i - 1] + width[i]
+    }
+
+    let ViewsStyles = []
+    for (let i = 0; i < 3; i++) {
+      ViewsStyles.push({
+        style: {
+          left: spring(leftPosition[i], springSettings),
+          height: spring(height[i], springSettings),
+          width: spring(width[i], springSettings),
+        }
+      });
+    }
+    this.setState((oldState) => {
+      oldState['dimensions'] = [height, width]
+      oldState['configs2'] = ViewsStyles
+      oldState['currDimension'] = 0
+      return oldState
+    })
+
+  };
   render() {
 
-    // wait for componentmount before rendering
+    // wait for component mount before rendering
     if ((typeof (this.state['currDimension'])) !== 'undefined'
       && (typeof (this.state['dimensions']) !== 'undefined')) {
       return (
-        <div>
-          <input
-            type="range"
-            min={0}
-            max={this.state['dimensions'].length}
-            value={this.state['currDimension']}
-            onChange={this.handleChange} />
-
+        <>
           <div className='d-flex justify-content-center'>
             <Motion style={{
               height: spring(this.state['dimensions'][0][this.state['currDimension']]),
@@ -163,7 +214,7 @@ export default class Animation extends React.Component {
                           {style =>
                             <div className='demo4-photo' style={style}>
                               <CreatorView
-                                id='Creator' submit={this.create} />
+                                id='Creator' submit={this.submitWrapper} />
                             </div>
                           }
                         </Motion>
@@ -172,16 +223,17 @@ export default class Animation extends React.Component {
                             <div className='demo4-photo' style={style}>
                               <CorrectionsView
                                 id='Creator'
-                                cancel={this.props.cancelCorrection}
-                                submitCorrection={this.props.submitCorrection}
-                                words={this.props.words} />
+                                cancel={this.cancelCorrection}
+                                submitCorrection={this.submitCorrectionWrapper}
+                                words={this.state['words']} />
                             </div>
                           }
                         </Motion>
                         <Motion key={2} style={this.state['configs2'][2]['style']}>
                           {style =>
                             <div className='demo4-photo' style={style}>
-                              <DownloadView />
+                              <DownloadView 
+                                link={this.state['link']}/>
                             </div>
                           }
                         </Motion>
@@ -193,12 +245,20 @@ export default class Animation extends React.Component {
               }
             </Motion>
           </div>
-        </div>
+        </>
       );
     }
     else {
+      // it pre renders to get the view size.
       return (
         <>
+          <CorrectionsView
+            id='Creator'
+            cancel={this.cancelCorrection}
+            submitCorrection={this.submitCorrection}
+            words={this.state['words']} />
+          <CreatorView id='Creator' submit={this.submit} />
+          <DownloadView id='Creator' />
         </>
       )
     }
