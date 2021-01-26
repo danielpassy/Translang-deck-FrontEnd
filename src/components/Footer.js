@@ -23,7 +23,7 @@ function Footer(props) {
             <div className="container">
                 <div className="row">
                     <div className="col-3"></div>
-                    <div className="col d-flex  justify-content-end pt-1 pb-1">Me dê um oi!
+                    <div className="col d-flex  justify-content-end pt-1 pb-1">Say hi to me!    
                         <div className="pl-2 "><SocialIcon style={{ height: 25, width: 25 }} fgColor={fgColorIcons} bgColor={bgColorIcons} url="mailto:daniel.passy@gmail.com" /></div>
                         <div className="pl-2 "><SocialIcon style={{ height: 25, width: 25 }} fgColor={fgColorIcons} bgColor={bgColorIcons} url="https://github.com/danielpassy" /></div>
                         <div className="pl-2 "><SocialIcon style={{ height: 25, width: 25 }} fgColor={fgColorIcons} bgColor={bgColorIcons} url="https://www.linkedin.com/in/daniel-mattos-passy-671b8a69/" /></div>

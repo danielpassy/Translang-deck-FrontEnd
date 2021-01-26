@@ -22,11 +22,11 @@ export default class MainPage extends Component {
             fontSize: '64px'
         }
         return (
-            <div className='App'>
+            <div className='App babyBlue'>
                 <NavBar />
+                <Hero id='Hero' />
                 <Animation
                     submit={this.submit} />
-                <Hero id='Hero' />
                 <Description id='Description' />
                 <Cards id='Cards' />
                 <div id='Action' style={styleStartWithAnki} className='fullHeight babyBlue text-center'>

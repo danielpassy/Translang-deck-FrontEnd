@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import CorrectionCard from './CorrectionCard'
 
 
-export default function corrections(props) {
+export default function Corrections(props) {
+
 
     let cardContainer = [];
     let i = 0;
@@ -15,28 +16,37 @@ export default function corrections(props) {
                 <div className="row m-3">
                     <div className='col-12 col-md-6 '>
                         <CorrectionCard
+                            handleChange={props.handleChange}
                             word={props.words[i].word}
+                            message={props.words[i].message}
                             number={props.words.length}
-                            i={i + 1} />
+                            key={i}
+                            i={i} />
                     </div>
                 </div>
             )
             break;
         }
-
+        // otherwise, push 2 to form a row
         cardContainer.push(
             <div className="row m-3">
                 <div className='col-12 col-md-6'>
                     <CorrectionCard
+                        handleChange={props.handleChange}
                         word={props.words[i].word}
+                        message={props.words[i].message}
                         number={props.words.length}
-                        i={i + 1} />
+                        key={i}
+                        i={i} />
                 </div>
                 <div className='col-12 col-md-6'>
                     <CorrectionCard
+                        handleChange={props.handleChange}
                         word={props.words[i + 1].word}
+                        message={props.words[i + 1].message}
                         number={props.words.length}
-                        i={i + 2} />
+                        key={i + 1}
+                        i={i + 1} />
                 </div>
             </div>
         )
@@ -49,28 +59,31 @@ export default function corrections(props) {
 
 
     return (
-        <div id={props.id} className='fullHeight babyYellow p-3 Corrections position-relative'>
-            <div className="container lightBabyYellow seventyHeight" >
-                <p style={{ position: 'absolute', left: '14vw' }}
-                    className='greyBorder btn btn-primary'
-                    onClick={props.cancel}>
-                    return
+        <div className='fullHeight babyYellow p-3 Corrections position-relative'>
+            <form id="correctionsForm">
+                <div className="container lightBabyYellow seventyHeight" >
+                    <p style={{ position: 'absolute', left: '14vw' }}
+                        className='greyBorder btn btn-primary'
+                        onClick={props.cancel}
+                        form="myForm">
+                        return
                 </p>
-                <p style={{ position: 'absolute', right: '14vw', bottom: '5vh' , zIndex: '10'}}
-                    className='greyBorder btn btn-primary'
-                    onClick={props.submitCorrection}>
-                    return
+                    <p style={{ position: 'absolute', right: '14vw', bottom: '5vh', zIndex: '10' }}
+                        className='greyBorder btn btn-primary'
+                        onClick={props.submitCorrection}>
+                        return
                 </p>
-                <p style={{ position: 'absolute', left: '14vw', height: '20vh' }} className=''>
+                    <p style={{ position: 'absolute', left: '14vw', height: '20vh' }} className=''>
 
+                    </p>
+                    <p className='title textShadow'>
+                        Corrections are Needed
                 </p>
-                <p className='title textShadow'>
-                    Corrections are Needed
-                </p>
-                <div className="container">
-                    {cardContainer}
+                    <div className="container">
+                        {cardContainer}
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     )
 }

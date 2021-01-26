@@ -1,7 +1,7 @@
 import React from 'react';
 import { Motion, spring } from 'react-motion';
 import axios from 'axios'
-
+import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import './Animation.css'
 import CorrectionsView from '../Corrections'
 import CreatorView from '../Creator'
@@ -9,29 +9,30 @@ import DownloadView from '../Download'
 
 
 
-const springSettings = { stiffness: 170, damping: 26 };
+const springSettings = { stiffness: 120, damping: 35 };
 
 export default class Animation extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      dimensions: [[500, 350], [800, 600], [800, 400], [700, 500], [200, 650], [600, 600]],
+      dimensions: [],
       currDimension: undefined,
       configs2: undefined,
-      views: undefined,
       words: [
         { word: 'hello', message: 'has multiple meanings' },
         { word: 'שדגלן', message: 'was not found' },
         { word: 'שדגשדג', message: 'has multiple meanings' },
         { word: 'שדג', message: 'was not found' },
       ],
-      link: ""
+      link: "",
+      corrections: []
     };
     this.submitCorrectionWrapper = this.submitCorrectionWrapper.bind(this)
     this.submitWrapper = this.submitWrapper.bind(this)
     this.cancelCorrection = this.cancelCorrection.bind(this)
     this.submitCorrection = this.submitCorrection.bind(this)
+    this.handleCorrection = this.handleCorrection.bind(this)
   };
 
   async submitWrapper(data, method) {
@@ -62,6 +63,7 @@ export default class Animation extends React.Component {
             console.log(error)
             oldState['words'].push({ word: response['data']['errors'][error]['word'], message: response['data']['errors'][error]['message'] })
           }
+          oldState['corrections'] = new Array(response['data']['errors'].length).fill("")
           return oldState
         })
         return 1;
@@ -79,21 +81,35 @@ export default class Animation extends React.Component {
 
   async submitCorrectionWrapper() {
     // prevent users to see the view changing
+    scroller.scrollTo("Creator", {
+      spy: true,
+      smooth: 'easeOutCubic',
+      offset: -70,
+      duration: 900,
+    });
     let response = await this.submitCorrection()
     response ? this.changeView(response) : console.log("error")
   };
 
-  submitCorrection() {
+  async submitCorrection() {
     // TODO:fetch resources in the BackEnd
 
     // TODO:update state with the file Link
     return 2;
   };
+
+  handleCorrection(value, index) {
+    this.setState((oldState) => {
+      oldState['corrections'][index] = value
+    })
+  }
+
   cancelCorrection() {
     this.changeView(0)
     // to avoid the user to see the transition
     setTimeout(() => { this.setState((oldState) => oldState[`words`] = []) }, 500)
   };
+
   changeView = (x) => {
     // 'object' in case it's triggered by a button,
     //  false if called by another ufnction
@@ -225,6 +241,7 @@ export default class Animation extends React.Component {
                                 id='Creator'
                                 cancel={this.cancelCorrection}
                                 submitCorrection={this.submitCorrectionWrapper}
+                                handleChange={this.handleCorrection}
                                 words={this.state['words']} />
                             </div>
                           }
@@ -232,8 +249,8 @@ export default class Animation extends React.Component {
                         <Motion key={2} style={this.state['configs2'][2]['style']}>
                           {style =>
                             <div className='demo4-photo' style={style}>
-                              <DownloadView 
-                                link={this.state['link']}/>
+                              <DownloadView
+                                link={this.state['link']} />
                             </div>
                           }
                         </Motion>

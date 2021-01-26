@@ -16,11 +16,11 @@ export default function Cards({ id }) {
                 <div className="row ml-2 mr-2 pt-3 d-flex align-items-center justify-content-center">
                     <div className="col-12 col-md-5  babyYellow mb-3 mt-3 rounded" style={extraPadding}>
                         <div className="subTitle blackFont pb-3 ">
-                            Study the right amount of time
+                            Study less
                         </div>
                         <p className='text' >
-                            Memorization doesn’t happen on the first exposure, you need to review the subject.
-                            Anki control when to review to make sure you study just enough, no less, no more
+                            Anki uses Flash Cards, it challenges you to remember information, helping you retaining knowledge in the long term.
+                            Widely Used by medicine students and language learners
                         </p>
                     </div>
                     <div className="col-md-1 col-0"></div>
@@ -34,12 +34,12 @@ export default function Cards({ id }) {
                     <div className="col-md-1 col-0"></div>
                     <div className="col-12 col-md-5 babyYellow mb-3 mt-3 " style={extraPadding}>
                         <div className="subTitle blackFont pb-3 rounded">
-                            Polyglots use to learn vocabulary
+                            Polyglots use it to learn vocabulary
                             </div>
                         <p className='text'>
-                            Memorization doesn’t happen on the first exposure, you need to review the subject.
-                            Anki control when to review to make sure you study just enough, no less, no more
-                            </p>
+                            Pairing Anki with exposure to the language is the fastest way to acquire a new Language.
+                            <p className="m-0 p-0">You may get fluent in 2 Years!</p>
+                        </p>
                     </div>
                 </div>
             </div>

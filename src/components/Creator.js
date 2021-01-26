@@ -125,7 +125,7 @@ export default class Creator extends Component {
         }
 
         return (
-            <div id={this.props.id} className='fullHeight babyYellow Creator TEST' >
+            <div id={'Creator'} className='fullHeight babyYellow Creator TEST' >
                 <div className="createBox ">
                     <div className="container">
                         <div className="title blackFont row d-flex justify-content-center whiteFont textShadow">

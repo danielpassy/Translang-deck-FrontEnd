@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function CorrectionCard(props) {
 
+    const [value, setValue] = useState("");
+
+    function handleChange(event) {
+        setValue(event.target.value);
+        props.handleChange(event.target.value, props.i)
+    }
     const labelOnTop = {
-        display: 'block',   
+        display: 'block',
         textAlign: 'left'
     }
 
@@ -29,12 +35,18 @@ export default function CorrectionCard(props) {
 
     return (
         <div className='marfim p-3 rounded m-3' style={relative}>
-            <p className="number" style={absolute}>{props.i}/{props.number}</p>
+            <p className="number" style={absolute}>{props.i + 1}/{props.number}</p>
             <p className="text bold " style={textAlignment}>
-                The word {props.word} is
+                {props.message}: {props.word}
             </p>
             <label for="correction" style={labelOnTop}>Write a correction:</label>
-            <input type="text" name="correction" id="correction" placeholder={props.word} style={input100}/>
+            <input type="text"
+                value={value}
+                onChange={(handleChange)}
+                name="correction"
+                id="correction"
+                placeholder={props.word}
+                style={input100} />
         </div>
     )
 }

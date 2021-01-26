@@ -26,7 +26,7 @@ export default function Hero({ id }) {
                             Create my Deck
             </Link>
                     </div>
-                    <div className='second m-3 pt-2 pb-2 w15 btn btn-primary babyYellow border-0 mb-3 textShadow'>
+                    <div className='    second m-3 pt-2 pb-2 w15 btn btn-primary babyYellow border-0 mb-3 textShadow'>
                         <Link
                             activeClass="active"
                             to="Description"
