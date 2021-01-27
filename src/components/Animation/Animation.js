@@ -53,6 +53,9 @@ export default class Animation extends React.Component {
       const response = await axios.post(`/api/upload_${method}/`, body)
       if (response['status'] == 201) {
         //TODO: redirect to file download page
+        this.setState((oldState) => {
+          oldState['link'] = response.data['deck']
+        })
         return 2;
       }
       else if (response['status'] == 200) {
@@ -93,7 +96,37 @@ export default class Animation extends React.Component {
 
   async submitCorrection() {
     // TODO:fetch resources in the BackEnd
+    try {
+      const response = await axios.post(`/api/upload_${method}/`, body)
+      if (response['status'] == 201) {
+        //TODO: redirect to file download page
+        this.setState((oldState) => {
+          oldState['link'] = response.data['deck']
+        })
+        return 2;
+      }
+      else if (response['status'] == 200) {
+        this.setState((oldState) => {
 
+          oldState['words'] = []
+          for (const error in response['data']['errors']) {
+            console.log(error)
+            oldState['words'].push({ word: response['data']['errors'][error]['word'], message: response['data']['errors'][error]['message'] })
+          }
+          oldState['corrections'] = new Array(response['data']['errors'].length).fill("")
+          return oldState
+        })
+        return 1;
+      }
+      else {
+        throw new Error(`Unexpected response ${response['status']}`);
+      }
+
+    } catch (error) {
+      console.log(error)
+      return 0;
+      // TODO: do something with the Error
+    }
     // TODO:update state with the file Link
     return 2;
   };

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Download() {
+export default function Download(props) {
 
     const absolute45 = {
         position: 'absolute',
@@ -39,7 +39,7 @@ export default function Download() {
                                 <img style={imageModifier} className=' fourtyFiveHeight' src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Anki-icon.svg/1200px-Anki-icon.svg.png" alt="Anki Logo" /></div>
                             <div className="download pt-3">
                                 <label for="downloadBTN">
-                                    <input type="button" value="Download" name="downloadBTN" className="subTitle btn marfim button grayBorder" />
+                                    <a href={props['link']}><input type="button" value="Download" name="downloadBTN" className="subTitle btn marfim button grayBorder" /></a>
                                 </label>
                             </div>
                         </div>
