@@ -54,6 +54,8 @@ export default function Corrections(props) {
         i = i + 2;
     }
 
+    // finaly, added the submit button
+
 
 
 
@@ -67,20 +69,27 @@ export default function Corrections(props) {
                         onClick={props.cancel}
                         form="myForm">
                         return
-                </p>
-                    <p style={{ position: 'absolute', right: '14vw', bottom: '5vh', zIndex: '10' }}
-                        className='greyBorder btn btn-primary'
-                        onClick={props.submitCorrection}>
-                        return
-                </p>
-                    <p style={{ position: 'absolute', left: '14vw', height: '20vh' }} className=''>
-
                     </p>
                     <p className='title textShadow'>
                         Corrections are Needed
-                </p>
+                    </p>
+                    <p className='text' style={{ position: 'absolute', left: '55vw', top:'14vh', zIndex:'2' }}>
+                        Left empty to discard
+                    </p>
+                    <svg style={{ position: 'absolute', right: '0vw', top:'14vh' }}
+                        width="50vw" height="4vh" viewBox="0 0 60vw 4vh" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0.5H641V48H41.5L0 0.5Z" fill="#56CCF2" fill-opacity="0.75" />
+                    </svg>
+
                     <div className="container">
                         {cardContainer}
+                        <div className='row  justify-content-end'>
+                            <p className=' col-6 col-md-4 col-xl-2 greyBorder btn btn-primary marfim blackFont subTitle'
+                                onClick={props.submitCorrection}>
+                                Create
+                            </p>
+                            <p className='col-2'></p>
+                        </div>
                     </div>
                 </div>
             </form>

@@ -56,6 +56,7 @@ export default class Animation extends React.Component {
         this.setState((oldState) => {
           oldState['link'] = response.data['deck']
         })
+        // 2 -> the download page
         return 2;
       }
       else if (response['status'] == 200) {
@@ -66,9 +67,12 @@ export default class Animation extends React.Component {
             console.log(error)
             oldState['words'].push({ word: response['data']['errors'][error]['word'], message: response['data']['errors'][error]['message'] })
           }
+          // create an array equal of the number of errors to hold the corrections
           oldState['corrections'] = new Array(response['data']['errors'].length).fill("")
+          oldState['id'] = response['data']['id']
           return oldState
         })
+        // 1-> the correction page
         return 1;
       }
       else {
@@ -95,9 +99,18 @@ export default class Animation extends React.Component {
   };
 
   async submitCorrection() {
+    let body = {
+      'id': this.state['id'],
+      'errors': []
+    }
+    this.state['corrections'].map((entry) => {
+      if (entry) {
+        body['errors'].push({ 'correction': entry })
+      }
+    })
     // TODO:fetch resources in the BackEnd
     try {
-      const response = await axios.post(`/api/upload_${method}/`, body)
+      const response = await axios.post(`/api/correct/`, body)
       if (response['status'] == 201) {
         //TODO: redirect to file download page
         this.setState((oldState) => {
