@@ -6,6 +6,8 @@ It allows user to utilize [AnkiTron](https://github.com/danielpassy/Anki-CardOTr
 
 
 ## Installation
+It requires NPM 
+
 Clone it 
 ```bash
 git clone
