@@ -7,7 +7,7 @@ import Hero from './Hero'
 import Description from './Description'
 import Animation from './Animation/Animation'
 
-import "./../App.css";
+import "./../nav.css";
 import "./../css.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
