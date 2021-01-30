@@ -1,8 +1,5 @@
-:root {
-  --off-white: #fafafa;
-}
 .nav {
-  background-color: var(--off-white);
+  background-color: #fafafa;
   position: sticky !important;
   top: 0px;
   width: 100%;
@@ -40,7 +37,81 @@
 }
 
 .nav-item:hover {
-  color: black;
+  color: #007bff;
   cursor: pointer;
+}
+
+
+/* --------- Mobile Full Screen seetings ---------  */
+@media screen and (max-width: 992px) {
+  .fullscreen {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: fadeIn 1s forwards;
+  }
+  .noscreen {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: fadeOut 1s forwards;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+    
+  }
+}
+
+/* menu full screen prop */
+.babyBlue > ul {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  padding: 0;
+}
+.babyBlue > ul > li {
+  padding: 5vh;
+  font-weight:700;
+  color:white;
+  font-size:32px
+}
+
+/* -------- Toggler property -------- */
+.navbar-toggler:focus,
+.navbar-toggler:active {
+    outline: 0;
+    
+}
+
+.close-icon{
+  width: 30px;
+  height: 30px;
+  display: grid;
+}
+
+#xIcon{
+  margin:auto;
 }
 

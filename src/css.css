@@ -4,6 +4,9 @@
  -----------------------------------------------*/
 
 /*------------------- Fonts ------------------ */
+body {
+    font-family: 'Inter', sans-serif !important;
+}
 body * {
     text-align: center;
 }
@@ -52,6 +55,8 @@ body * {
     }
 }
 /*------------------- Colors ------------------ */
+
+
 
 .babyYellow {
     background-color: #F2C94C !important;

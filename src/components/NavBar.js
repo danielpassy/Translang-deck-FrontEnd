@@ -1,15 +1,77 @@
-import React, { Component, useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import logo from "./../logo.svg";
 import { Link, animateScroll as scroll } from "react-scroll";
 
+
 export default function NavBar(props) {
 
+
+  // 4 states
+  // Close, transitioning in, open, transition out
+
+  // Close // TransIn  //   navBar   // Toggle // X
+  // True  //  false   //   hidden   // Toggle // hidden
+  // True  //  true    //   fadein  //  toggle // fadein
+  // False //  true    //   fadein  //  hidden // fadein 
+  // False //  false   //   Fadeout //  toggle // fadeout  
+
+  // fullscreen => fadein and toggle
+  // noscreen => Fadeout
+  const [transitionIn, setTransitioningIn] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  function handleToggle(){
-    const menuState = isMenuOpen
-    setIsMenuOpen(!menuState)
+  // prevents rerendering on pageload
+  const isFirstRun = useRef(false);
+  // prevents reclicking and fuckinup the state
+  const isIdle = useRef(true)
+
+  useEffect(() => {
+    if (isFirstRun.current) {
+      isIdle.current = false
+      setTimeout(() => {
+        // TODO: remove it after making sure the rest is working
+        setIsMenuOpen(!isMenuOpen)
+        isIdle.current = true
+      }, 1000);
+    }
+    isFirstRun.current = true;
+  }, [transitionIn]);
+
+  function handleToggle() {
+    if (isIdle.current) {
+      setTransitioningIn(!transitionIn)
+    }
   }
+  const navClass = function () {
+    if (!isMenuOpen && !transitionIn) {
+      return 'collapse navbar-collapse'
+    }
+    else if (!isMenuOpen && transitionIn) {
+      return 'fullscreen babyBlue'
+    }
+    else if (isMenuOpen && transitionIn) {
+      return 'fullscreen babyBlue'
+    }
+    else if (isMenuOpen && !transitionIn) {
+      return 'noscreen babyBlue'
+    }
+  }
+  const toggleClass = () => {
+    if (!isMenuOpen && !transitionIn) {
+      return 'navbar-toggler-icon'
+    }
+    else if (!isMenuOpen && transitionIn) {
+      return 'navbar-toggler-icon'
+    }
+    else if (isMenuOpen && transitionIn) {
+      return 'collapse'
+    }
+    else if (isMenuOpen && !transitionIn) {
+      return 'navbar-toggler-icon'
+    }
+  }
+
+
 
   function scrollToTop() {
     scroll.scrollToTop();
@@ -20,31 +82,33 @@ export default function NavBar(props) {
   }
 
 
-  return (
 
+  return (
     <nav class="nav navbar navbar-expand-lg navbar-light bg-light">
 
       {/* toggler  */}
+      <img
+        src={logo}
+        className="nav-logo"
+        alt="Logo"
+        onClick={scrollToTop}
+      />
       <button class="navbar-toggler"
         onClick={handleToggle}
         type="button"
-        data-toggle="collapse"
-        data-target="#navbarTogglerDemo03"
-        aria-controls="navbarTogglerDemo03"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <img
-          src={logo}
-          className="nav-logo"
-          alt="Logo"
-          onClick={scrollToTop}
-        />
+        style={{ zIndex: '100' }}>
+        <span class={isMenuOpen ? "collapse" : "navbar-toggler-icon"}></span>
+        <span class={isMenuOpen ? "close-icon" : "collapse"}>
+          <div id="xIcon">✖</div>
+        </span>
 
-      {/* Collapsed part */}
-      <div className={"nav-content p-0 " + (isMenuOpen ?"" :" collapse navbar-collapse")} id="navbarTogglerDemo03 navbar" >
-        
+      </button>
+
+
+      {/* Collapsed part 
+      isMenuOpen handles the collapse, uncolapse */}
+      <div className={"nav-content p-0 " + navClass()} >
+
         <ul className="nav-items" style={navCorrection}>
           <li className="nav-item">
             <Link
@@ -97,5 +161,6 @@ export default function NavBar(props) {
         </ul>
       </div>
     </nav>
+
   );
 }
