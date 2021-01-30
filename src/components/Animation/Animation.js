@@ -183,14 +183,11 @@ export default class Animation extends React.Component {
     // for values to the left of value, reduce left.
     // values on the right, increase left.  
     for (let i = Number(value) + 1; i < 3; i++) {
-      console.log(i)
       leftPosition[i] = leftPosition[i - 1] + width[i]
     }
     for (let i = Number(value) - 1; i >= 0; i--) {
-      console.log(i)
       leftPosition[i] = leftPosition[i + 1] - width[i]
     }
-    console.log(leftPosition)
 
 
     let configs2 = []
@@ -253,8 +250,17 @@ export default class Animation extends React.Component {
       oldState['currDimension'] = 0
       return oldState
     })
+    window.addEventListener('resize', () => {
+      this.changeView(this.state['currDimension'])
+    })
 
   };
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => {
+      this.changeView(this.state['currDimension'])
+    })
+  }
   render() {
 
     // wait for component mount before rendering
