@@ -30,6 +30,10 @@
   height: 100%;
 }
 
+.nav-itens{
+  margin-bottom: 0px;
+}
+
 .nav-item {
   display: inline;
   margin-left: 2rem;

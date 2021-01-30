@@ -42,7 +42,7 @@ export default function NavBar(props) {
       setTransitioningIn(!transitionIn)
     }
   }
-  const navClass = function () {
+  function navClassFunc() {
     if (!isMenuOpen && !transitionIn) {
       return 'collapse navbar-collapse'
     }
@@ -56,12 +56,12 @@ export default function NavBar(props) {
       return 'noscreen babyBlue'
     }
   }
-  const toggleClass = () => {
+  function toggleClassFunc() {
     if (!isMenuOpen && !transitionIn) {
       return 'navbar-toggler-icon'
     }
     else if (!isMenuOpen && transitionIn) {
-      return 'navbar-toggler-icon'
+      return 'collapse'
     }
     else if (isMenuOpen && transitionIn) {
       return 'collapse'
@@ -70,6 +70,9 @@ export default function NavBar(props) {
       return 'navbar-toggler-icon'
     }
   }
+  const toggleClass = toggleClassFunc()
+  const navClass = navClassFunc()
+  const XClass = toggleClass === 'collapse' ? 'close-icon' : "collapse"
 
 
 
@@ -97,8 +100,8 @@ export default function NavBar(props) {
         onClick={handleToggle}
         type="button"
         style={{ zIndex: '100' }}>
-        <span class={isMenuOpen ? "collapse" : "navbar-toggler-icon"}></span>
-        <span class={isMenuOpen ? "close-icon" : "collapse"}>
+        <span class={toggleClass}></span>
+        <span class={XClass}>
           <div id="xIcon">✖</div>
         </span>
 
@@ -107,7 +110,7 @@ export default function NavBar(props) {
 
       {/* Collapsed part 
       isMenuOpen handles the collapse, uncolapse */}
-      <div className={"nav-content p-0 " + navClass()} >
+      <div className={"nav-content p-0 " + navClass} >
 
         <ul className="nav-items" style={navCorrection}>
           <li className="nav-item">
