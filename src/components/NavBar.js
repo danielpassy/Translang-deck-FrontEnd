@@ -32,14 +32,18 @@ export default function NavBar(props) {
         // TODO: remove it after making sure the rest is working
         setIsMenuOpen(!isMenuOpen)
         isIdle.current = true
-      }, 1000);
+      }, 300);
     }
     isFirstRun.current = true;
   }, [transitionIn]);
 
   function handleToggle() {
-    if (isIdle.current) {
-      setTransitioningIn(!transitionIn)
+
+    // it can only work while in mobile mode
+    if (document.body.clientWidth < 906) {
+      if (isIdle.current) {
+        setTransitioningIn(!transitionIn)
+      }
     }
   }
   function navClassFunc() {
@@ -113,7 +117,9 @@ export default function NavBar(props) {
       <div className={"nav-content p-0 " + navClass} >
 
         <ul className="nav-items" style={navCorrection}>
-          <li className="nav-item">
+          <li
+            className="nav-item"
+          >
             <Link
               activeClass="active"
               to="Hero"
@@ -121,6 +127,9 @@ export default function NavBar(props) {
               smooth={true}
               offset={-70}
               duration={500}
+              onClick={handleToggle}
+              className='p-3'
+
             >
               Home
               </Link>
@@ -133,6 +142,9 @@ export default function NavBar(props) {
               smooth={true}
               offset={-70}
               duration={500}
+              onClick={handleToggle}
+              className='p-3'
+
             >
               Create
               </Link>
@@ -145,6 +157,8 @@ export default function NavBar(props) {
               smooth={true}
               offset={-70}
               duration={500}
+              onClick={handleToggle}
+              className='p-3'
             >
               Discover Anki
               </Link>
@@ -157,6 +171,8 @@ export default function NavBar(props) {
               smooth={true}
               offset={-70}
               duration={500}
+              onClick={handleToggle}
+              className='p-3'
             >
               Fast Facts
               </Link>

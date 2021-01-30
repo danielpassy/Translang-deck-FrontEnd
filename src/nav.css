@@ -1,3 +1,6 @@
+a{
+  text-decoration: none !important;
+}
 .nav {
   background-color: #fafafa;
   position: sticky !important;
@@ -39,32 +42,41 @@
   margin-left: 2rem;
   color: #333;
 }
+.nav-item > a {
+  text-decoration: none;
+  color: black;
+}
 
-.nav-item:hover {
-  color: #007bff;
-  cursor: pointer;
+.active {
+  color: #007bff !important;
+  background-color: transparent;
 }
 
 
+
 /* --------- Mobile Full Screen seetings ---------  */
-@media screen and (max-width: 992px) {
+
+/* the 906px is an important size to remove a bug */
+@media screen and (max-width: 906px) {
+  /* fadein (plus toggle) */
   .fullscreen {
     z-index: 1;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    animation: fadeIn 1s forwards;
+    width: 100vw;
+    height: 100vh;
+    animation: fadeIn 0.8s forwards;
   }
+  /* fadeout class */
   .noscreen {
     z-index: 1;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    animation: fadeOut 1s forwards;
+    width: 100vw;
+    height: 100vh;
+    animation: fadeOut 0.8s forwards;
   }
 
   @keyframes fadeIn {
@@ -86,22 +98,33 @@
     }
     
   }
+  .babyBlue > ul {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    padding: 0;
+  }
+  /* the navbar while in android mode */
+  ul > li {
+    padding: 5vh;
+    font-weight:700;
+    color:white;
+    font-size:32px
+  }
+  .nav-item > a:not(.active){
+    color:white;
+    text-decoration: none;
+  }
+
 }
 
 /* menu full screen prop */
-.babyBlue > ul {
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  padding: 0;
-}
-.babyBlue > ul > li {
-  padding: 5vh;
-  font-weight:700;
-  color:white;
-  font-size:32px
-}
 
+
+.nav-item:hover, .nav-item > a:hover {
+  color: #007bff;
+  cursor: pointer;
+}
 /* -------- Toggler property -------- */
 .navbar-toggler:focus,
 .navbar-toggler:active {
