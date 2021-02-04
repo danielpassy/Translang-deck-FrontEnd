@@ -38,7 +38,7 @@ export default function Cards({ id }) {
                             </div>
                         <p className='text'>
                             Pairing Anki with exposure to the language is the fastest way to acquire a new Language.
-                            <p className="m-0 p-0">You may get fluent in 2 Years!</p>
+                            <p className="m-0 p-0">Get fluent in less than 2 Years!</p>
                         </p>
                     </div>
                 </div>

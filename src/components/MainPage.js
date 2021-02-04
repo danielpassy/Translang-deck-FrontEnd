@@ -31,7 +31,7 @@ export default class MainPage extends Component {
                 <Cards id='Cards' />
                 <div id='Action' style={styleStartWithAnki} className='fullHeight babyBlue text-center'>
                     <div className='w-100' style={{ height: `20vh` }}></div>
-                    <div className="btn btn-primary babyYellow blackFont  rounded title pl-3 pr-3"> Start with Anki </div>
+                    <div onClick={() => window.open("https://apps.ankiweb.net/")} className="btn btn-primary babyYellow blackFont  rounded title pl-3 pr-3"> Start with Anki </div>
                 </div>
                 <Footer />
             </div>

@@ -23,7 +23,7 @@ export default function Description({ id }) {
                     offset={-70}
                     duration={500}
                 ><div className="btn ">
-                    <p className='text whiteFont transparentWhite p-1 rounded'>
+                    <p className='text whiteFont transparentWhite p-2 rounded'>
                         Discover More!
                     </p>
                 </div>

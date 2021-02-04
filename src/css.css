@@ -24,6 +24,11 @@ body * {
     font-size: 22px !important;
     font-weight: 400;
 }
+
+.smallText {
+    font-size: 18px ;
+    font-weight: 400;
+}
 .or {
     font-size: 28px !important;
     font-weight: 700;
@@ -36,7 +41,27 @@ body * {
 .whiteFont {
     color: white !important;
 }
-
+@media screen and (min-width: 1400px) {
+    .title {
+        font-size: 82px !important;
+        color:white;
+        font-weight: 400;
+    }
+    .subTitle {
+        font-size: 43px !important;
+        color: white;
+        font-weight:500
+    }
+    .text {
+        font-size: 29px !important;
+        font-weight: 400;
+    }
+    
+    .smallText {
+        font-size: 23px ;
+        font-weight: 400;
+    }
+}
 @media screen and (max-width: 992px) {
     .title {
         font-size: 48px !important;

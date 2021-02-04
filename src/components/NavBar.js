@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import logo from "./../logo.svg";
+import logo from "./../logo_symbol_transparent.png";
 import { Link, animateScroll as scroll } from "react-scroll";
 
 
@@ -40,7 +40,7 @@ export default function NavBar(props) {
   function handleToggle() {
 
     // it can only work while in mobile mode
-    if (document.body.clientWidth < 906) {
+    if (document.body.clientWidth < 992) {
       if (isIdle.current) {
         setTransitioningIn(!transitionIn)
       }
@@ -96,7 +96,7 @@ export default function NavBar(props) {
       {/* toggler  */}
       <img
         src={logo}
-        className="nav-logo"
+        className="nav-logo ml-3"
         alt="Logo"
         onClick={scrollToTop}
       />
@@ -128,7 +128,7 @@ export default function NavBar(props) {
               offset={-70}
               duration={500}
               onClick={handleToggle}
-              className='p-3'
+              className='p-3 smallText'
 
             >
               Home
@@ -143,7 +143,7 @@ export default function NavBar(props) {
               offset={-70}
               duration={500}
               onClick={handleToggle}
-              className='p-3'
+              className='p-3 smallText'
 
             >
               Create
@@ -158,7 +158,7 @@ export default function NavBar(props) {
               offset={-70}
               duration={500}
               onClick={handleToggle}
-              className='p-3'
+              className='p-3 smallText'
             >
               Discover Anki
               </Link>
@@ -172,7 +172,7 @@ export default function NavBar(props) {
               offset={-70}
               duration={500}
               onClick={handleToggle}
-              className='p-3'
+              className='p-3 smallText'
             >
               Fast Facts
               </Link>
