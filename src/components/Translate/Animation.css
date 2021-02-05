@@ -1,17 +1,17 @@
 .view-container-container {
-    display: flex;
-    display: -webkit-flex;
-    align-items: center;
-    height: 700px;
-    position: relative;
-  }
+  display    : flex;
+  display    : -webkit-flex;
+  align-items: center;
+  height     : 700px;
+  position   : relative;
+}
 
-  .view-container {
-    overflow: hidden;
-    position: relative;
-    margin: auto;
-  }
+.view-container {
+  overflow: hidden;
+  position: relative;
+  margin  : auto;
+}
 
-  .view {
-    position: absolute;
-  }
+.view {
+  position: absolute;
+}

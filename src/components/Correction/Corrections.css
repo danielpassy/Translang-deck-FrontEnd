@@ -1,0 +1,56 @@
+#discardText {
+    position: absolute;
+    left    : 50vw;
+    top     : 120px;
+    z-index : 2
+}
+
+#discardBanner {
+    position: absolute;
+    right   : -10vw;
+    top     : 120px;
+
+}
+
+@media screen and (max-width: 1400px) {
+    #discardText {
+        top: 113px;
+    }
+
+    #discardBanner {
+        top: 109px;
+    }
+}
+
+
+@media screen and (max-width: 992px) {
+    #discardText {
+        top: 88px;
+    }
+
+    #discardBanner {
+        top: 83px;
+    }
+}
+
+
+
+
+
+@media screen and (max-width: 768px) {
+    #discardText {
+        top: 158px;
+    }
+
+    #discardBanner {
+        top: 153px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    #discardText {
+        position : absolute;
+        font-size: 18px !important;
+    }
+
+}

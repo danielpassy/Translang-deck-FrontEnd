@@ -3,7 +3,7 @@ import { Motion, spring } from 'react-motion';
 import axios from 'axios'
 import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import './Animation.css'
-import CorrectionsView from '../Corrections'
+import CorrectionsView from '../Correction/Corrections'
 import CreatorView from '../Creator'
 import DownloadView from '../Download'
 

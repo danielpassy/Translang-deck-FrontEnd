@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import CorrectionCard from './CorrectionCard'
-
+import CorrectionCard from '../CorrectionCard'
+import './Corrections.css'
 
 export default function Corrections(props) {
 
@@ -59,31 +59,36 @@ export default function Corrections(props) {
         <div className='fullHeight babyYellow p-3 Corrections position-relative'>
             <form id="correctionsForm">
                 <div className="container lightBabyYellow seventyHeight" >
-                    <p style={{ position: 'absolute', left: '14vw' }}
-                        className='greyBorder btn btn-primary'
-                        onClick={props.cancel}
-                        form="myForm">
-                        return
-                    </p>
                     <p className='title textShadow'>
                         Corrections are Needed
                     </p>
-                    <p className='text' style={{ position: 'absolute', left: '55vw', top: '14vh', zIndex: '2' }}>
+                        <p className='text' id='discardText'>
                         Left empty to discard
                     </p>
-                    <svg style={{ position: 'absolute', right: '0vw', top: '14vh' }}
-                        width="50vw" height="4vh" viewBox="0 0 60vw 4vh" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg id='discardBanner'
+                        width= "70vw" height="4vh" viewBox="0 0 70vw 4vh" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0 0.5H641V48H41.5L0 0.5Z" fill="#56CCF2" fill-opacity="0.75" />
                     </svg>
 
-                    <div className="container">
+                    <div className="container  pt-2 ">
                         {cardContainer}
                         <div className='row  justify-content-end'>
-                            <p className=' col-6 col-md-4 col-xl-2 greyBorder btn btn-primary marfim blackFont subTitle'
+
+                            {/* When on mobile, align buttons vertically on the center
+                                When not, both on the same line to the right  */}
+                            <p className='col-3 col-md-5 col-xl-7'></p>
+                            <p className='col-6 col-md-3 col-xl-2 mr-md-3 greyBorder btn btn-primary marfim blackFont text'
                                 onClick={props.submitCorrection}>
                                 Create
                             </p>
-                            <p className='col-2'></p>
+                            <p className='col-3 d-md-none'></p>
+                            <p className='col-3 d-md-none'></p>
+                            <p className='col-6 col-md-3 col-xl-2 ml-md-3 mr-md-2 greyBorder btn btn-primary marfim blackFont text'
+                               onClick={props.cancel}>
+                                Cancel
+                            </p>
+                            <p className='col-3 d-md-none'></p>
+                            
                         </div>
                     </div>
                 </div>
