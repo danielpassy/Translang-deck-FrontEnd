@@ -55,11 +55,6 @@ export default function Corrections(props) {
     }
 
     // finaly, added the submit button
-
-
-
-
-
     return (
         <div className='fullHeight babyYellow p-3 Corrections position-relative'>
             <form id="correctionsForm">
@@ -73,10 +68,10 @@ export default function Corrections(props) {
                     <p className='title textShadow'>
                         Corrections are Needed
                     </p>
-                    <p className='text' style={{ position: 'absolute', left: '55vw', top:'14vh', zIndex:'2' }}>
+                    <p className='text' style={{ position: 'absolute', left: '55vw', top: '14vh', zIndex: '2' }}>
                         Left empty to discard
                     </p>
-                    <svg style={{ position: 'absolute', right: '0vw', top:'14vh' }}
+                    <svg style={{ position: 'absolute', right: '0vw', top: '14vh' }}
                         width="50vw" height="4vh" viewBox="0 0 60vw 4vh" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0 0.5H641V48H41.5L0 0.5Z" fill="#56CCF2" fill-opacity="0.75" />
                     </svg>

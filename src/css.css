@@ -26,7 +26,7 @@ body * {
 }
 
 .smallText {
-    font-size: 18px ;
+    font-size: 23px ;
     font-weight: 400;
 }
 .or {
@@ -58,8 +58,8 @@ body * {
     }
     
     .smallText {
-        font-size: 23px ;
-        font-weight: 400;
+        font-size: 29px ;
+        font-weight: 500;
     }
 }
 @media screen and (max-width: 992px) {
@@ -77,6 +77,12 @@ body * {
     .or {
         font-size: 24px !important;
         font-weight: 700;
+    }
+}
+@media screen and (max-width: 405px) {
+    .text {
+        font-size: 19px !important;
+        font-weight: 500;
     }
 }
 /*------------------- Colors ------------------ */

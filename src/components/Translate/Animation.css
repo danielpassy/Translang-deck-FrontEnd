@@ -1,4 +1,4 @@
-.demo4 {
+.view-container-container {
     display: flex;
     display: -webkit-flex;
     align-items: center;
@@ -6,16 +6,12 @@
     position: relative;
   }
 
-  .demo4-inner {
+  .view-container {
     overflow: hidden;
     position: relative;
     margin: auto;
   }
 
-  .demo4-photo {
+  .view {
     position: absolute;
-  }
-
-  .red {
-    background-color: red;
   }

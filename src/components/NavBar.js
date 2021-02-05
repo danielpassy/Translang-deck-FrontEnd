@@ -114,7 +114,7 @@ export default function NavBar(props) {
 
       {/* Collapsed part 
       isMenuOpen handles the collapse, uncolapse */}
-      <div className={"nav-content p-0 " + navClass} >
+      <div className={"nav-content p-0 justify-content-center " + navClass} >
 
         <ul className="nav-items" style={navCorrection}>
           <li

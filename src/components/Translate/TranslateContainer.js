@@ -26,7 +26,8 @@ export default class Animation extends React.Component {
         { word: 'שדג', message: 'was not found' },
       ],
       link: "",
-      corrections: []
+      corrections: [],
+      error: null
     };
     this.submitCorrectionWrapper = this.submitCorrectionWrapper.bind(this)
     this.submitWrapper = this.submitWrapper.bind(this)
@@ -36,53 +37,51 @@ export default class Animation extends React.Component {
   };
 
   async submitWrapper(data, method) {
+
     // prevent users to see the words changing
     let response = await this.submit(data, method)
-    response ? this.changeView(response) : console.log("error")
-    //TODO: do something with the error.
+    response[0] ? this.changeView(response[1]) : console.log("error")
+
+    this.setState({ error: response })
   };
 
   async submit(data, method) {
 
     // split input into list
     if (method === 'list') { data = data.split(/\r?\n/) }
-
     let body = (method === 'file') ? { 'file': data } : { 'word_list': data }
 
     try {
       const response = await axios.post(`/api/upload_${method}/`, body)
+
       if (response['status'] == 201) {
-        //TODO: redirect to file download page
         this.setState((oldState) => {
           oldState['link'] = response.data['deck']
         })
         // 2 -> the download page
-        return 2;
+        return [true, 2];
       }
+      // if there's corrections to be done
       else if (response['status'] == 200) {
         this.setState((oldState) => {
 
+          // populate the words with api data
           oldState['words'] = []
           for (const error in response['data']['errors']) {
-            console.log(error)
             oldState['words'].push({ word: response['data']['errors'][error]['word'], message: response['data']['errors'][error]['message'] })
           }
+
           // create an array equal of the number of errors to hold the corrections
           oldState['corrections'] = new Array(response['data']['errors'].length).fill("")
           oldState['id'] = response['data']['id']
           return oldState
         })
         // 1-> the correction page
-        return 1;
+        return [true, 1];
       }
-      else {
-        throw new Error(`Unexpected response ${response['status']}`);
-      }
-
     } catch (error) {
       console.log(error)
-      return 0;
-      // TODO: do something with the Error
+      return [false, error];
     }
   };
 
@@ -266,41 +265,52 @@ export default class Animation extends React.Component {
     // wait for component mount before rendering
     if ((typeof (this.state['currDimension'])) !== 'undefined'
       && (typeof (this.state['dimensions']) !== 'undefined')) {
+
       return (
         <>
           <div className='d-flex justify-content-center'>
+
+            {/* Container of the container*/}
             <Motion style={{
               height: spring(this.state['dimensions'][0][this.state['currDimension']]),
               width: spring(this.state['dimensions'][1][this.state['currDimension']]),
             }}>
               {style =>
-                <div className="demo4" style={style}>
+                <div className="view-container-container" style={style}>
+
+                  {/* Container  */}
                   <Motion style={style}>
                     {container =>
-                      <div className="demo4-inner" style={container}>
+                      <div className="view-container" style={container}>
+
+                        {/* Actual view, only one at the time is visible */}
                         <Motion key={0} style={this.state['configs2'][0]['style']}>
                           {style =>
-                            <div className='demo4-photo' style={style}>
+                            <div className='view' style={style}>
                               <CreatorView
-                                id='Creator' submit={this.submitWrapper} />
+                                id='Creator'
+                                submit={this.submitWrapper}
+                                error={this.state["error"]} />
                             </div>
                           }
                         </Motion>
                         <Motion key={1} style={this.state['configs2'][1]['style']}>
                           {style =>
-                            <div className='demo4-photo' style={style}>
+                            <div className='view' style={style}>
                               <CorrectionsView
                                 id='Creator'
                                 cancel={this.cancelCorrection}
                                 submitCorrection={this.submitCorrectionWrapper}
                                 handleChange={this.handleCorrection}
-                                words={this.state['words']} />
+                                words={this.state['words']}
+                                error={this.state["error"]}
+                              />
                             </div>
                           }
                         </Motion>
                         <Motion key={2} style={this.state['configs2'][2]['style']}>
                           {style =>
-                            <div className='demo4-photo' style={style}>
+                            <div className='view' style={style}>
                               <DownloadView
                                 link={this.state['link']} />
                             </div>

@@ -5,7 +5,7 @@ import NavBar from './NavBar'
 import Cards from './Cards'
 import Hero from './Hero'
 import Description from './Description'
-import Animation from './Animation/Animation'
+import Animation from './Translate/TranslateContainer'
 
 import "./../nav.css";
 import "./../css.css"

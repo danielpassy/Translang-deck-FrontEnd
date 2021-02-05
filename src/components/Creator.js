@@ -114,7 +114,7 @@ export default class Creator extends Component {
         if (this.state['file'].length != 0 && this.state['word_list']) {
             return alert('Choose either file or write the words, not both')
         }
-        
+
         this.state['file'].length === 0 ? this.props.submit(this.state['word_list'], 'list') : this.props.submit(this.state['file'], 'file')
     }
 
@@ -136,10 +136,10 @@ export default class Creator extends Component {
 
 
 
-                        <div className="row  p-3 ">
-
-                            {/* inputtedBox, display only after user input the file */}
-                            <div className="inputtedBox input  col-5 textInput justify-content-center white" style={{ display: 'none' }}>
+                        <div className="row  p-3 justify-content-center">
+                            {/* Input Box */}
+                            {/* inputtedBox overlay display only after user input the file */}
+                            <div className="inputtedBox input  col-10 col-md-5 textInput justify-content-center white" style={{ display: 'none' }}>
                                 <div style={{ display: 'inline-block' }}>
                                     <svg width="25" height="50" viewBox="0 0 110 126" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M105 62.75V121H5V4.5H55M105 62.75L55 4.5M105 62.75H55V4.5" stroke="black" stroke-opacity="0.65" stroke-width="9" />
@@ -150,7 +150,7 @@ export default class Creator extends Component {
                             </div>
                             {/* End of inputtedBox */}
 
-                            <div className="input inputBox col-5 flex-column textInput d-flex justify-content-center white" style={dashBorder}>
+                            <div className="input inputBox col-10 col-md-5 flex-column textInput d-flex justify-content-center white" style={dashBorder}>
 
                                 {/* box overlay that accepts drag'n'drop */}
                                 <div className='inputBox' ref={this.dropRef} style={{ display: 'inline-block', position: 'relative' }}>
@@ -198,13 +198,18 @@ export default class Creator extends Component {
                                     </label>
                                 </div>
                             </div>
-                            <div className=" align-self-center or col-2 d-flex justify-content-center">
+                            {/* End of input box */}
+                            {/* Or */}
+                            <div className=" align-self-center or col-10 col-md-2 d-flex justify-content-center">
                                 Or
                             </div>
-                            <div className="input col-5 flex-column textInput d-flex justify-content-center babyBlue">
-                                <div className="form-group"><div className="subTitle text-center">
-                                    Enter the words
-                                </div>
+                            {/* end of Or */}
+                            {/* Input List */}
+                            <div className="input col-10 col-md-5 flex-column textInput d-flex justify-content-center babyBlue">
+                                <div className="form-group">
+                                    <div className="subTitle text-center">
+                                        Enter (Hebrew) words
+                                    </div>
                                     <textarea
                                         placeholder={'שלום \n שחרתי\n קרתי'}
                                         className="form-control text-right"
@@ -212,10 +217,10 @@ export default class Creator extends Component {
                                         rows='4'
                                         onChange={this.handleTextInput}
                                         value={this.state.word_list}>
-
                                     </textarea>
                                 </div>
                             </div>
+                            {/* End Input List */}
                         </div>
                         <div className="text-center row d-flex justify-content-center  p-3">
                             <div className="submit input marfim noBorder">
