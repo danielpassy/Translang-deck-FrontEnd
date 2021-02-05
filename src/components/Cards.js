@@ -24,7 +24,7 @@ export default function Cards({ id }) {
                         </p>
                     </div>
                     <div className="col-md-1 col-0"></div>
-                    <img src="https://i.imgur.com/2QGgY8w.png" alt="anki card example" className='img-fluid col-12 p-0 col-md-5 text-center' />
+                    <img src="https://remembereverything.org/wp-content/uploads/2016/10/Vocabulary-card-Anki-2.jpg" alt="anki card example" className='img-fluid col-12 p-0 col-md-5 text-center' />
                 </div>
                 <div className="row mr-2 ml-2 pt-2 pb-3 d-flex align-items-center justify-content-center">
 
