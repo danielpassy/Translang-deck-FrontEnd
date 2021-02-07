@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, animateScroll as scroll } from "react-scroll";
+
 export default function Description({ id }) {
     return (
         <div id={id} className='fullHeight babyBlue pt-3'>
@@ -23,10 +24,10 @@ export default function Description({ id }) {
                     offset={-70}
                     duration={500}
                 ><div className="btn ">
-                    <p className='text whiteFont transparentWhite p-2 rounded'>
-                        Discover More!
+                        <p className='text whiteFont transparentWhite p-2 rounded'>
+                            Discover More!
                     </p>
-                </div>
+                    </div>
                 </Link>
             </div>
         </div>

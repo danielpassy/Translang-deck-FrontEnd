@@ -3,6 +3,10 @@ import { Link, animateScroll as scroll } from "react-scroll";
 
 export default function Hero({ id }) {
 
+    // TODO: https://howtogetonline.com/how-to-embed-a-hero-background-video.php
+    // insert a video here.
+
+
 
     let verticalCenter = {
         paddingTop: '10vh'

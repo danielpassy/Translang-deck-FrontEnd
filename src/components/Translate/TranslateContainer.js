@@ -25,7 +25,7 @@ export default class Animation extends React.Component {
         { word: 'שדגשדג', message: 'has multiple meanings' },
         { word: 'שדג', message: 'was not found' },
       ],
-      link: "",
+      deck: "",
       corrections: [],
       error: null
     };
@@ -56,7 +56,7 @@ export default class Animation extends React.Component {
 
       if (response['status'] == 201) {
         this.setState((oldState) => {
-          oldState['link'] = response.data['deck']
+          oldState['deck'] = response.data['deck']
         })
         // 2 -> the download page
         return [true, 2];
@@ -93,8 +93,8 @@ export default class Animation extends React.Component {
       offset: -70,
       duration: 900,
     });
-    let response = await this.submitCorrection()
-    response ? this.changeView(response) : console.log("error")
+    let [itWorked, nextView] = await this.submitCorrection()
+    if (itWorked) { this.changeView(nextView) }
   };
 
   async submitCorrection() {
@@ -102,45 +102,36 @@ export default class Animation extends React.Component {
       'id': this.state['id'],
       'errors': []
     }
-    this.state['corrections'].map((entry) => {
+    let a = this.state['corrections'].map((entry) => {
       if (entry) {
         body['errors'].push({ 'correction': entry })
       }
     })
-    // TODO:fetch resources in the BackEnd
+    console.log(a)
     try {
       const response = await axios.post(`/api/correct/`, body)
       if (response['status'] == 201) {
-        //TODO: redirect to file download page
-        this.setState((oldState) => {
-          oldState['link'] = response.data['deck']
-        })
-        return 2;
+        this.setState({ deck: response.data['deck'] })
+        return [true, 2];
       }
       else if (response['status'] == 200) {
+        let words = []
+        for (const error in response['data']['errors']) {
+          words.push({ word: response['data']['errors'][error]['word'], message: response['data']['errors'][error]['message'] })
+        }
         this.setState((oldState) => {
-
-          oldState['words'] = []
-          for (const error in response['data']['errors']) {
-            console.log(error)
-            oldState['words'].push({ word: response['data']['errors'][error]['word'], message: response['data']['errors'][error]['message'] })
-          }
+          oldState['words'] = words
           oldState['corrections'] = new Array(response['data']['errors'].length).fill("")
           return oldState
         })
-        return 1;
+        return [true, 1];
       }
-      else {
-        throw new Error(`Unexpected response ${response['status']}`);
-      }
+      else { throw new Error(); }
 
     } catch (error) {
-      console.log(error)
-      return 0;
-      // TODO: do something with the Error
+      this.setState({ error: "There was a problem communicating with the server, try again" })
+      return [false, 0];
     }
-    // TODO:update state with the file Link
-    return 2;
   };
 
   handleCorrection(value, index) {
@@ -312,7 +303,7 @@ export default class Animation extends React.Component {
                           {style =>
                             <div className='view' style={style}>
                               <DownloadView
-                                link={this.state['link']} />
+                                deck={this.state['deck']} />
                             </div>
                           }
                         </Motion>
