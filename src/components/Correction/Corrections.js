@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import CorrectionCard from '../CorrectionCard'
 import './Corrections.css'
+import CSRF from '../util/CSRF'
 
 export default function Corrections(props) {
 
@@ -56,19 +57,23 @@ export default function Corrections(props) {
 
     // finaly, added the submit button
     return (
-        <div className='fullHeight babyYellow p-3 Corrections position-relative'>
-            <form id="correctionsForm">
+        <div className='fullHeight babyYellow p-3 Corrections'>
+            <form id="correctionsForm " className='position-relative'>
+                <CSRF />
                 <div className="container lightBabyYellow seventyHeight" >
                     <p className='title textShadow'>
                         Corrections are Needed
                     </p>
+                    <div className='ribbonGroup'>
                         <p className='text' id='discardText'>
                         Left empty to discard
-                    </p>
-                    <svg id='discardBanner'
-                        width= "70vw" height="4vh" viewBox="0 0 70vw 4vh" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 0.5H641V48H41.5L0 0.5Z" fill="#56CCF2" fill-opacity="0.75" />
-                    </svg>
+                        
+                        </p>
+                        <svg id='discardBanner'
+                            width="70vw" height="4vh" viewBox="0 0 70vw 4vh" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 0.5H641V48H41.5L0 0.5Z" fill="#56CCF2" fill-opacity="0.75" />
+                        </svg>
+                    </div>
 
                     <div className="container  pt-2 ">
                         {cardContainer}
@@ -84,11 +89,11 @@ export default function Corrections(props) {
                             <p className='col-3 d-md-none'></p>
                             <p className='col-3 d-md-none'></p>
                             <p className='col-6 col-md-3 col-xl-2 ml-md-3 mr-md-2 greyBorder btn btn-primary marfim blackFont text'
-                               onClick={props.cancel}>
+                                onClick={props.cancel}>
                                 Cancel
                             </p>
                             <p className='col-3 d-md-none'></p>
-                            
+
                         </div>
                     </div>
                 </div>

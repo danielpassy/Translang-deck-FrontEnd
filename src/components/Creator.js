@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import CSRF from './util/CSRF'
+
 
 export default class Creator extends Component {
 
@@ -32,8 +34,6 @@ export default class Creator extends Component {
         div.removeEventListener('dragover', this.handleDrag)
         div.removeEventListener('drop', this.handleDrop)
     }
-
-
 
     handleDrag = (e) => {
         e.preventDefault()
@@ -126,15 +126,15 @@ export default class Creator extends Component {
 
         return (
             <div id={'Creator'} className='fullHeight babyYellow Creator TEST' >
-                <div className="createBox ">
+                <form className="createBox ">
+                    <CSRF />
+
                     <div className="container">
                         <div className="title blackFont row d-flex justify-content-center whiteFont textShadow">
                             Create your Anki Deck
                         </div>
                     </div>
                     <div className="container lightBabyYellow rounded mt-3">
-
-
 
                         <div className="row  p-3 justify-content-center">
                             {/* Input Box */}
@@ -230,7 +230,7 @@ export default class Creator extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         )
     }

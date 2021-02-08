@@ -3,6 +3,7 @@ import { Motion, spring } from 'react-motion';
 import axios from 'axios'
 import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import './Animation.css'
+import { API, getHeaders } from '../util/api'
 import CorrectionsView from '../Correction/Corrections'
 import CreatorView from '../Creator'
 import DownloadView from '../Download'
@@ -52,7 +53,7 @@ export default class Animation extends React.Component {
     let body = (method === 'file') ? { 'file': data } : { 'word_list': data }
 
     try {
-      const response = await axios.post(`/api/upload_${method}/`, body)
+      const response = await axios.post(API['post'](method), body)
 
       if (response['status'] == 201) {
         this.setState((oldState) => {
@@ -138,14 +139,12 @@ export default class Animation extends React.Component {
     this.setState((oldState) => {
       oldState['corrections'][index] = value
     })
-  }
-
+  };
   cancelCorrection() {
     this.changeView(0)
     // to avoid the user to see the transition
     setTimeout(() => { this.setState((oldState) => oldState[`words`] = []) }, 500)
   };
-
   changeView = (x) => {
     // 'object' in case it's triggered by a button,
     //  false if called by another ufnction
@@ -244,13 +243,14 @@ export default class Animation extends React.Component {
       this.changeView(this.state['currDimension'])
     })
 
-  };
+    axios.defaults.headers = getHeaders ()
 
+  };
   componentWillUnmount() {
     window.removeEventListener('resize', () => {
       this.changeView(this.state['currDimension'])
     })
-  }
+  };
   render() {
 
     // wait for component mount before rendering

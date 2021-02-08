@@ -1,49 +1,40 @@
 #discardText {
     position: absolute;
-    left    : 50vw;
+    z-index : 3;
+    left    : 28px;
+}
+
+.ribbonGroup {
+    position: absolute;
+    z-index : 2;
+    left    : 45vw;
     top     : 120px;
-    z-index : 2
 }
 
 #discardBanner {
-    position: absolute;
-    right   : -10vw;
-    top     : 120px;
-
+    position: relative;
+    z-index : 2
 }
 
-@media screen and (max-width: 1400px) {
-    #discardText {
-        top: 113px;
-    }
 
-    #discardBanner {
-        top: 109px;
+@media screen and (max-width: 1400px) {
+    .ribbonGroup {
+        top: 100px;
     }
 }
 
 
 @media screen and (max-width: 992px) {
-    #discardText {
-        top: 88px;
-    }
-
-    #discardBanner {
-        top: 83px;
+    .ribbonGroup {
+        top: 70px;
     }
 }
 
 
-
-
-
 @media screen and (max-width: 768px) {
-    #discardText {
-        top: 158px;
-    }
-
-    #discardBanner {
-        top: 153px;
+    .ribbonGroup {
+        top: 145px;
+        left: 26vw;
     }
 }
 

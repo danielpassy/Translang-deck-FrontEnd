@@ -12,6 +12,7 @@ import "./../css.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
+
 export default class MainPage extends Component {
     constructor() {
         super()
