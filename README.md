@@ -4,6 +4,10 @@ https://www.translang.live/ <br>
 Written in React using [create-react-app](https://github.com/facebook/create-react-app) <br>
 It allows user to utilize [AnkiTron](https://github.com/danielpassy/Anki-CardOTron) to automate the creation of Anki Deck to study Hebrew.
 
+## About it
+Translang Deck is built using React + Django + Nginx + Gunicorn and a custom library, in this repo we have the React part.<br>
+It's a responsive SPA, translated to both English and Portuguese. 
+
 
 ## Installation
 It requires NPM 
