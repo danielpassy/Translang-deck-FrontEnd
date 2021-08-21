@@ -103,12 +103,7 @@ export default class Animation extends React.Component {
       'id': this.state['id'],
       'errors': []
     }
-    let a = this.state['corrections'].map((entry) => {
-      if (entry) {
-        body['errors'].push({ 'correction': entry })
-      }
-    })
-    console.log(a)
+
     try {
       const response = await axios.post(`/api/correct/`, body)
       if (response['status'] == 201) {

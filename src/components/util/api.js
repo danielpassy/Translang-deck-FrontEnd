@@ -1,10 +1,10 @@
 import Cookies from 'js-cookie'
-export const API_URL = "http://localhost:3000/"
+export const API_URL = window.location.hostname
 
 export const API = {
-    csfr: API_URL + 'api/csrf_token/',
-    post: (method) => API_URL + `api/upload_${method}/`,
-    correct: API_URL + `correct/`
+    csfr: 'api/csrf_token/',
+    post: (method) => `api/upload_${method}/`,
+    correct: '/' + `correct/`
 }
 
 export function getHeaders() {

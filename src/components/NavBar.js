@@ -6,14 +6,7 @@ import { Link, animateScroll as scroll } from "react-scroll";
 export default function NavBar(props) {
 
 
-  // 4 states
-  // Close, transitioning in, open, transition out
 
-  // Close // TransIn  //   navBar   // Toggle // X
-  // True  //  false   //   hidden   // Toggle // hidden
-  // True  //  true    //   fadein  //  toggle // fadein
-  // False //  true    //   fadein  //  hidden // fadein 
-  // False //  false   //   Fadeout //  toggle // fadeout  
 
   // fullscreen => fadein and toggle
   // noscreen => Fadeout
@@ -22,7 +15,7 @@ export default function NavBar(props) {
 
   // prevents rerendering on pageload
   const isFirstRun = useRef(false);
-  // prevents reclicking and fuckinup the state
+  // prevents reclicking and messing the state
   const isIdle = useRef(true)
 
   useEffect(() => {
@@ -46,6 +39,15 @@ export default function NavBar(props) {
       }
     }
   }
+
+  // The must be only 4 possible states
+  // Close, transitioning in, open, transition out
+
+  // Close // TransIn  //   navBar   // Toggle // X
+  // True  //  false   //   hidden   // Toggle // hidden
+  // True  //  true    //   fadein  //  toggle // fadein
+  // False //  true    //   fadein  //  hidden // fadein 
+  // False //  false   //   Fadeout //  toggle // fadeout  
   function navClassFunc() {
     if (!isMenuOpen && !transitionIn) {
       return 'collapse navbar-collapse'
@@ -113,7 +115,7 @@ export default function NavBar(props) {
 
 
       {/* Collapsed part 
-      isMenuOpen handles the collapse, uncolapse */}
+      isMenuOpen handles the collapse/ uncolapse */}
       <div className={"nav-content p-0 justify-content-center " + navClass} >
 
         <ul className="nav-items" style={navCorrection}>
